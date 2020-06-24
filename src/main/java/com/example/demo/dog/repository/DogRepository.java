@@ -2,14 +2,11 @@ package com.example.demo.dog.repository;
 
 import com.example.demo.dog.vo.Dog;
 import com.example.demo.dog.vo.DogCountDto;
-import com.example.demo.dog.vo.DogResponseDto;
 import com.example.demo.dog.vo.DogTypeCountDto;
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface DogRepository extends JpaRepository<Dog, Long> {

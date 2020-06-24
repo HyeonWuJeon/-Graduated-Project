@@ -1,10 +1,10 @@
-package com.example.demo.diagnosis.vo;
+package com.example.demo.diagnosis.dto;
 
 import com.example.demo.diagnosis.domain.Air;
 import com.example.demo.diagnosis.domain.Corna;
 import com.example.demo.diagnosis.domain.Diagnosis;
 import com.example.demo.diagnosis.domain.Macak;
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 

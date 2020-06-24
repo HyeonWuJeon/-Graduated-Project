@@ -1,6 +1,6 @@
 package com.example.demo.disease.dao;
 
-import com.example.demo.disease.dto.Disease;
+import com.example.demo.disease.domain.Disease;
 import com.example.demo.disease.dto.DiseaseNameCountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

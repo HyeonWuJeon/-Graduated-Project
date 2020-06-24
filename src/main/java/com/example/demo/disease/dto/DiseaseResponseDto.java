@@ -1,5 +1,6 @@
 package com.example.demo.disease.dto;
 
+import com.example.demo.disease.domain.Disease;
 import lombok.*;
 
 @Getter

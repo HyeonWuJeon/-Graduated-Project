@@ -1,8 +1,7 @@
-package com.example.demo.member.vo;
+package com.example.demo.member.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class MemberUpdatePwd {

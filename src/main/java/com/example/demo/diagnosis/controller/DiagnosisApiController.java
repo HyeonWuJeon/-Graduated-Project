@@ -1,14 +1,11 @@
 package com.example.demo.diagnosis.controller;
 
 import com.example.demo.diagnosis.service.DiagnosisService;
-import com.example.demo.diagnosis.vo.DiagnosisNameCountDto;
-import com.example.demo.disease.dto.DiseaseNameCountDto;
+import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
 import com.example.demo.disease.dto.DiseaseResponseDto;
 import com.example.demo.disease.service.DiseaseService;
 import com.example.demo.dog.service.DogService;
 import com.example.demo.dog.vo.DogTypeCountDto;
-import com.example.demo.reserve.service.ReserveService;
-import com.example.demo.reserve.vo.ReserveResponseDto;
 import com.example.demo.symptom.repository.SymptomRepository;
 import com.example.demo.symptom.vo.Symptom;
 import com.example.demo.symptom.vo.SymptomForm;

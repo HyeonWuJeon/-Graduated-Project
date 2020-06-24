@@ -3,21 +3,17 @@ package com.example.demo.member.service;
 import com.example.demo.diagnosis.domain.Diagnosis;
 import com.example.demo.diagnosis.repository.DiagnosisRepository;
 import com.example.demo.diagnosis.service.DiagnosisService;
-import com.example.demo.hospital.repository.HospitalRepository;
 import com.example.demo.hospital.service.HospitalService;
-import com.example.demo.hospital.vo.Hospital;
+import com.example.demo.member.domain.Member;
 import com.example.demo.member.repository.MemberRepository;
-import com.example.demo.member.vo.*;
+import com.example.demo.member.dto.*;
 
-import com.example.demo.reserve.repository.ReserveRepository;
 import com.example.demo.reserve.service.ReserveService;
-import com.example.demo.reserve.vo.Reserve;
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +22,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -169,5 +164,9 @@ public class MemberService implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public Member regSession(String name){
+        return memberRepository.findEmailCheck(name);
+    }
 
 }

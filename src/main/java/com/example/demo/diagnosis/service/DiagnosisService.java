@@ -8,10 +8,9 @@ import com.example.demo.diagnosis.repository.AirRepository;
 import com.example.demo.diagnosis.repository.CornaRepository;
 import com.example.demo.diagnosis.repository.DiagnosisRepository;
 import com.example.demo.diagnosis.repository.MacakRepository;
-import com.example.demo.diagnosis.vo.DiagnosisDto;
-import com.example.demo.diagnosis.vo.DiagnosisNameCountDto;
-import com.example.demo.dog.repository.DogRepository;
-import com.example.demo.member.vo.Member;
+import com.example.demo.diagnosis.dto.DiagnosisDto;
+import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
+import com.example.demo.member.domain.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

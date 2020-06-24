@@ -1,18 +1,13 @@
 package com.example.demo.dog.vo;
 
 
-import com.example.demo.disease.dto.Disease;
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import lombok.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

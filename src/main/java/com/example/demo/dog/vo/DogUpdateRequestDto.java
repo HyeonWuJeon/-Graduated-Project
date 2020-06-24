@@ -1,9 +1,7 @@
 package com.example.demo.dog.vo;
 
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import lombok.*;
-
-import javax.swing.*;
 
 @Getter
 public class DogUpdateRequestDto {

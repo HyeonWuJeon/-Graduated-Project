@@ -1,9 +1,8 @@
 package com.example.demo.reserve.vo;
 
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @RequiredArgsConstructor

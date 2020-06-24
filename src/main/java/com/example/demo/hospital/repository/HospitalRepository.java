@@ -1,7 +1,6 @@
 package com.example.demo.hospital.repository;
 
 import com.example.demo.hospital.vo.Hospital;
-import com.example.demo.member.vo.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

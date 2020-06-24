@@ -2,9 +2,7 @@ package com.example.demo.reserve.service;
 
 import com.example.demo.hospital.repository.HospitalRepository;
 import com.example.demo.hospital.vo.Hospital;
-import com.example.demo.member.repository.MemberRepository;
-import com.example.demo.member.service.MemberService;
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import com.example.demo.reserve.repository.ReserveRepository;
 import com.example.demo.reserve.vo.Reserve;
 import com.example.demo.reserve.vo.ReserveResponseDto;

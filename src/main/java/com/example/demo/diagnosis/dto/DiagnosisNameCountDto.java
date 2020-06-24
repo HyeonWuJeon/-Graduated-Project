@@ -1,4 +1,4 @@
-package com.example.demo.diagnosis.vo;
+package com.example.demo.diagnosis.dto;
 
 import lombok.*;
 

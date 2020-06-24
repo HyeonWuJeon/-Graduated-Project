@@ -1,9 +1,8 @@
-package com.example.demo.member.vo;
+package com.example.demo.member.dto;
 
+import com.example.demo.member.domain.Member;
 import com.example.demo.overlap.Address;
 import lombok.*;
-
-import java.io.Serializable;
 
 @Getter
 @RequiredArgsConstructor

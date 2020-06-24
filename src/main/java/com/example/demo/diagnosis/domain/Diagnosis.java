@@ -1,6 +1,6 @@
 package com.example.demo.diagnosis.domain;
 
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

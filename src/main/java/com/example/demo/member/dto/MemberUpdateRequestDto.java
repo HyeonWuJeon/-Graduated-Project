@@ -1,14 +1,9 @@
-package com.example.demo.member.vo;
+package com.example.demo.member.dto;
 
 
-import com.example.demo.member.vo.Role;
-import com.example.demo.overlap.Address;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.io.Serializable;
 
 
 @Getter

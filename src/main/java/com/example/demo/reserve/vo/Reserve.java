@@ -1,7 +1,7 @@
 package com.example.demo.reserve.vo;
 
 import com.example.demo.hospital.vo.Hospital;
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import lombok.*;
 
 import javax.persistence.*;

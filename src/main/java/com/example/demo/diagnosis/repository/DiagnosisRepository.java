@@ -1,9 +1,8 @@
 package com.example.demo.diagnosis.repository;
 
 import com.example.demo.diagnosis.domain.Diagnosis;
-import com.example.demo.diagnosis.vo.DiagnosisNameCountDto;
-import com.example.demo.dog.vo.DogTypeCountDto;
-import com.example.demo.member.vo.Member;
+import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
+import com.example.demo.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,7 +18,7 @@ public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
     List<Diagnosis> findAllDesc(Member member);
 
     @Query("SELECT " +
-            "   new com.example.demo.diagnosis.vo.DiagnosisNameCountDto(diag.name, COUNT(diag.name))" +
+            "   new com.example.demo.diagnosis.dto.DiagnosisNameCountDto(diag.name, COUNT(diag.name))" +
             "FROM " +
             "   Diagnosis diag " +
             "GROUP BY " +

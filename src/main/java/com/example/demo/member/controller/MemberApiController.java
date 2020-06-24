@@ -1,26 +1,14 @@
 package com.example.demo.member.controller;
 
-import com.example.demo.diagnosis.domain.Diagnosis;
-import com.example.demo.diagnosis.repository.AirRepository;
-import com.example.demo.diagnosis.repository.CornaRepository;
-import com.example.demo.diagnosis.repository.DiagnosisRepository;
-import com.example.demo.diagnosis.repository.MacakRepository;
-import com.example.demo.diagnosis.service.DiagnosisService;
-import com.example.demo.hospital.service.HospitalService;
-import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.member.service.MemberService;
-import com.example.demo.member.vo.Member;
-import com.example.demo.member.vo.MemberUpdatePwd;
-import com.example.demo.member.vo.MemberUpdateRequestDto;
-import com.example.demo.member.vo.Role;
-import com.example.demo.reserve.service.ReserveService;
+import com.example.demo.member.dto.MemberUpdatePwd;
+import com.example.demo.member.dto.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

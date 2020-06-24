@@ -1,9 +1,10 @@
-package com.example.demo.member.vo;
+package com.example.demo.member.domain;
 
 
 import com.example.demo.diagnosis.domain.Diagnosis;
 import com.example.demo.dog.vo.Dog;
 import com.example.demo.hospital.vo.Hospital;
+import com.example.demo.member.dto.Role;
 import com.example.demo.overlap.Address;
 import com.example.demo.overlap.BaseTimeEntity;
 import lombok.*;

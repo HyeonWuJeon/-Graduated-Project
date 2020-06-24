@@ -1,9 +1,8 @@
-package com.example.demo.member.vo;
+package com.example.demo.member.dto;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 
 @Getter

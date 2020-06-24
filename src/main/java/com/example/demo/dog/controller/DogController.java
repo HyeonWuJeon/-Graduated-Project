@@ -4,7 +4,7 @@ import com.example.demo.dog.vo.DogResponseDto;
 import com.example.demo.dog.vo.DogSaveRequestDto;
 import com.example.demo.dog.service.DogService;
 import com.example.demo.member.repository.MemberRepository;
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

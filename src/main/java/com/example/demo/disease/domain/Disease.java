@@ -1,4 +1,4 @@
-package com.example.demo.disease.dto;
+package com.example.demo.disease.domain;
 import lombok.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

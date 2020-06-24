@@ -2,8 +2,7 @@ package com.example.demo.reserve.controller;
 
 import com.example.demo.diagnosis.service.DiagnosisService;
 import com.example.demo.member.repository.MemberRepository;
-import com.example.demo.member.vo.Member;
-import com.example.demo.member.vo.MemberResponseDto;
+import com.example.demo.member.domain.Member;
 import com.example.demo.reserve.service.ReserveService;
 import com.example.demo.reserve.vo.ReserveResponseDto;
 

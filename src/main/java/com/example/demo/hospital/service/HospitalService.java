@@ -7,10 +7,9 @@ import com.example.demo.hospital.vo.HospitalSaveRequestDto;
 import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.reserve.repository.ReserveRepository;
 
-import com.example.demo.member.vo.Member;
+import com.example.demo.member.domain.Member;
 import com.example.demo.reserve.vo.Reserve;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

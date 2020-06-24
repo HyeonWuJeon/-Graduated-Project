@@ -2,9 +2,9 @@ package com.example.demo.member.controller;
 
 import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.member.service.MemberService;
-import com.example.demo.member.vo.Member;
-import com.example.demo.member.vo.MemberResponseDto;
-import com.example.demo.member.vo.MemberSaveRequestDto;
+import com.example.demo.member.domain.Member;
+import com.example.demo.member.dto.MemberResponseDto;
+import com.example.demo.member.dto.MemberSaveRequestDto;
 import com.example.demo.overlap.Address;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -30,11 +29,14 @@ public class MemberController {
 
     private final MemberRepository memberRepository;
     private final MemberService memberService;
+    private final HttpSession httpSession;
 
     // 회원 메인 홈
     @RequestMapping("/")
     public String home(){
         log.info("home logger");
+        log.info("세션에 등록된값 확인"+ httpSession.getAttribute("user"));
+        log.info("세션등록값"+httpSession.getValue("user"));
         return "home";
     }
 
@@ -42,7 +44,6 @@ public class MemberController {
     @GetMapping("/member/signup")
     public String createMember(Model model) {
         model.addAttribute("memberForm", new MemberForm());
-
         return "memberAuth/signUp";
     }
 
@@ -80,12 +81,12 @@ public class MemberController {
     }
 
     @GetMapping("/member/mypage")
-    public String readMember(Model model, Principal principal) {
-        Member member = memberRepository.findEmailCheck(principal.getName()); //추후 ASPECT 적용대상
+    public String readMember(Model model, @LoginSession MemberResponseDto dto) {
+//        Member member = memberRepository.findEmailCheck(principal.getName()); //추후 ASPECT 적용대상
 
-        if(member != null) {
-            model.addAttribute("member", member);
-        }
+//        if(member != null) {
+        model.addAttribute("member", dto.getName());
+//        }
 
         return "memberAuth/myPage";
     }
@@ -135,6 +136,7 @@ public class MemberController {
 
     // 관리자 정보조회
     @GetMapping("/admin/mypage")
+//    @LoginSession
     public String readAdmin(Model model, Principal principal) {
 
         Member admin = memberRepository.findEmailCheck(principal.getName()); //추후 ASPECT 적용대상E
