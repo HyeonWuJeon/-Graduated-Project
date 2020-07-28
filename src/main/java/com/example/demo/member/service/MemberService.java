@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,7 +42,7 @@ public class MemberService implements UserDetailsService {
 
     // 회원가입 아이디 중복체크
     @Transactional
-    public int validateDuplicateMember(String user_email) {
+    public int validateDuplicateMember(String user_email)  {
         String value = user_email;
         value = value.substring(1,value.length()-1);
         HashMap<String, String> hashMap = new HashMap<>();
@@ -56,6 +57,7 @@ public class MemberService implements UserDetailsService {
         Member findMember = memberRepository.findEmailCheck(value2);
         System.out.println("findMember확인 = " + findMember);
         if (findMember != null) {
+//            throw new IllegalStateException("이미 존재하는 회원입니다.");
             return 1;
         } else {
             return 0;
@@ -64,7 +66,11 @@ public class MemberService implements UserDetailsService {
 
     // 회원가입
     @Transactional
-    public Long SignUp(MemberSaveRequestDto memberDto) {
+    public Long SignUp(MemberSaveRequestDto memberDto){
+
+        if(memberRepository.findEmailCheck(memberDto.getEmail()) !=null){
+            throw new IllegalStateException("이미 존재하는 회원입니다");
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.SHA256_PassWord(passwordEncoder.encode(memberDto.getPassword()));
 
