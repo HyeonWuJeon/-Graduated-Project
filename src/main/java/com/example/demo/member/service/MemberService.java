@@ -181,5 +181,9 @@ public class MemberService implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
+    public String mockTest(){
+        return "whteship";
+    }
+
 }
 

@@ -73,6 +73,7 @@ public class MemberController {
         return "member/memberAuth/signIn";
     }
 
+
     // 회원 마이페이지
     @GetMapping("/member/mypage")
     public String readMember(Model model, @LoginFindMember Member member) {
@@ -145,4 +146,8 @@ public class MemberController {
 
         return "admin/adminAuth/admin_settings";
     }
+
+
+
 }
+

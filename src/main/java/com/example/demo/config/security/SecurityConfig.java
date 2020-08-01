@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    private final CustomOAuth2UserService customOAuth2UserService;
+//    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -56,11 +56,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and() // 로그아웃 설정
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-                .logoutSuccessUrl("/")
-                .and()
-                    .oauth2Login()
-                        .userInfoEndpoint()
-                            .userService(customOAuth2UserService);
+                .logoutSuccessUrl("/");
+//                .and()
+//                    .oauth2Login()
+//                        .userInfoEndpoint()
+//                            .userService(customOAuth2UserService);
 
     }
 

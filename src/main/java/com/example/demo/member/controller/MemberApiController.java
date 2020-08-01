@@ -48,6 +48,11 @@ public class MemberApiController {
         return id;
     }
 
+    @GetMapping("/mockTest")
+    public String mocktest(){
+        return memberService.mockTest();
+    }
+
     // 관리자가 회원정보를 수정하는 API
     @PutMapping("/api/admin/member/settings/{id}")
     public Long updateMember(@PathVariable Long id, @RequestBody MemberUpdateRequestDto requestDto) {
