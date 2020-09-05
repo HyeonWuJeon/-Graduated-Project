@@ -26,6 +26,11 @@ public class Address {
         this.street = street;
     }
 
+    /**
+     * ??
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
