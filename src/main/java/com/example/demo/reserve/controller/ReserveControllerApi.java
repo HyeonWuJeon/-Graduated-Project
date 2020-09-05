@@ -1,6 +1,6 @@
 package com.example.demo.reserve.controller;
 
-import com.example.demo.config.auth.LoginFindMember;
+import com.example.demo.config.aop.LoginFindMember;
 
 import com.example.demo.member.domain.Member;
 import com.example.demo.member.service.MemberService;
@@ -36,7 +36,6 @@ public class ReserveControllerApi {
     @DeleteMapping("/api/member/reserve/delete/{id}")
     public Long delete(@PathVariable Long id) {
         reserveService.delete(id);
-
         return id;
     }
 

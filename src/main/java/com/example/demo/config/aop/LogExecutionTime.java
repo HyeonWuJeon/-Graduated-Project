@@ -1,4 +1,4 @@
-package com.example.demo.config.auth;
+package com.example.demo.config.aop;
 
 
 import java.lang.annotation.ElementType;
@@ -9,6 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME) //위빙
 public @interface LogExecutionTime {
-
 
 }

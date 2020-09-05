@@ -30,9 +30,6 @@ public class ReserveService {
         return reserveRepository.findAllMemberDesc(member).stream()
                 .map(ReserveResponseDto::new)
                 .collect(Collectors.toList());
-
-
-
     }
 
     @Transactional

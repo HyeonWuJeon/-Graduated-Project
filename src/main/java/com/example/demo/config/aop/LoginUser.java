@@ -1,5 +1,4 @@
-package com.example.demo.config.auth;
-
+package com.example.demo.config.aop;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,6 +7,5 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LoginFindMember {
-
+public @interface LoginUser {
 }

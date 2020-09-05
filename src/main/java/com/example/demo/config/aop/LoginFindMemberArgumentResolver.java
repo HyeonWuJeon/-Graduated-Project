@@ -1,4 +1,8 @@
-package com.example.demo.config.auth;
+package com.example.demo.config.aop;
+
+
+import com.example.demo.member.domain.Member;
+import com.example.demo.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -13,21 +17,22 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @RequiredArgsConstructor
 @Component
-public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
+public class LoginFindMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
-    //조건에 맞는 메소드의 경우 구현체가 지정한 값으로 메소드의 파라미터를 넘길 수 있다.
-
+    private final MemberService memberService;
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean isLoginUserAnnotation =parameter.getParameterAnnotation(LoginUser.class) != null;
-        boolean isUserClass = User.class.equals(parameter.getParameterType());
+
+        boolean isLoginUserAnnotation =parameter.getParameterAnnotation(LoginFindMember.class) != null;
+        boolean isUserClass = Member.class.equals(parameter.getParameterType());
         return isLoginUserAnnotation && isUserClass;
+
     }
 
-    // 파라메터에 전달할 메소드
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getPrincipal();
+        User user = (User)authentication.getPrincipal();
+        return memberService.findMember(user.getUsername());
     }
 }

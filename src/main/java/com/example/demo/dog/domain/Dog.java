@@ -39,6 +39,8 @@ public class Dog {
         this.type=type;
     }
 
+
+
     public Dog update(String age, String gender, String name) {
         this.age = age;
         this.gender = gender;
@@ -53,5 +55,6 @@ public class Dog {
         this.birth = birth;
         return this;
     }
+
 
 }

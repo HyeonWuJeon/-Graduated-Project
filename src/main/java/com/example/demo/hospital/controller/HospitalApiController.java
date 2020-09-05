@@ -1,6 +1,6 @@
 package com.example.demo.hospital.controller;
 
-import com.example.demo.config.auth.LoginFindMember;
+import com.example.demo.config.aop.LoginFindMember;
 import com.example.demo.hospital.domain.Hospital;
 
 import com.example.demo.hospital.dto.HospitalSaveRequestDto;

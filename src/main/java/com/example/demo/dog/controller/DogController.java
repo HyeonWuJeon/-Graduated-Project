@@ -1,6 +1,6 @@
 package com.example.demo.dog.controller;
 
-import com.example.demo.config.auth.LogExecutionTime;
+import com.example.demo.config.aop.LogExecutionTime;
 import com.example.demo.dog.dto.DogResponseDto;
 import com.example.demo.dog.dto.DogSaveRequestDto;
 import com.example.demo.dog.service.DogService;
@@ -47,14 +47,7 @@ public class DogController {
         Member member = memberService.findMember(principal.getName()); //추후 ASPECT 적용대상
 
         DogSaveRequestDto dog = new DogSaveRequestDto();
-        dogService.dog_SignUp(dog.builder()
-                .member(member)
-                .name(form.getName())
-                .type(form.getType())
-                .age(form.getAge())
-                .birth(form.getBirth())
-                .gender(form.getGender())
-                .build());
+
 
         List<DogResponseDto> Dogs = dogService.findAllDesc(member);
 

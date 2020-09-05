@@ -1,8 +1,8 @@
 package com.example.demo.config;
 
 
-import com.example.demo.config.auth.LoginFindMemberArgumentResolver;
-import com.example.demo.config.auth.LoginUserArgumentResolver;
+import com.example.demo.config.aop.LoginFindMemberArgumentResolver;
+import com.example.demo.config.aop.LoginUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

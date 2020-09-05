@@ -2,8 +2,8 @@ package com.example.demo.reserve.controller;
 
 
 import com.example.demo.member.domain.Member;
-import com.example.demo.config.auth.LogExecutionTime;
-import com.example.demo.config.auth.LoginFindMember;
+import com.example.demo.config.aop.LogExecutionTime;
+import com.example.demo.config.aop.LoginFindMember;
 import com.example.demo.member.service.MemberService;
 import com.example.demo.reserve.service.ReserveService;
 import com.example.demo.reserve.dto.ReserveResponseDto;
@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller

@@ -1,7 +1,7 @@
 package com.example.demo.disease.controller;
 
-import com.example.demo.config.auth.LogExecutionTime;
-import com.example.demo.config.auth.LoginFindMember;
+import com.example.demo.config.aop.LogExecutionTime;
+import com.example.demo.config.aop.LoginFindMember;
 import com.example.demo.diagnosis.domain.Diagnosis;
 import com.example.demo.diagnosis.dto.DiagnosisDto;
 import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
@@ -14,8 +14,6 @@ import com.example.demo.dog.service.DogService;
 import com.example.demo.hospital.dto.HospitalResponseDto;
 import com.example.demo.hospital.service.HospitalService;
 import com.example.demo.member.domain.Member;
-import com.example.demo.member.repository.MemberRepository;
-import com.example.demo.member.service.MemberService;
 import com.example.demo.symptom.dto.SymptomForm;
 import com.example.demo.symptom.dto.SymptomResponseDto;
 
