@@ -1,10 +1,11 @@
-package com.example.demo.config;
+package com.example.demo.config.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -138,6 +139,19 @@ public class ApplicationService {
         HashMap<String, Object> rtnMap = new HashMap<>();
         rtnMap.put(AJAX_RESULT_TEXT, AJAX_RESULT_FAIL);      /* 실패 */
         return rtnMap;
+    }
+    /**
+     * FUNCTION :: 기본 EXCEPTION 처리
+     * 트랙잭션 결과를 항상 롤백하도록 처리
+     * 입력된 결과 값을 결과 객체에 세팅
+     *
+     * @param rtnMap
+     * @param result
+     */
+
+    public void defaultExceptionHandling(Map<String, Object> rtnMap, String result) {
+        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+        rtnMap.put("httpCode", result);
     }
 
     /**

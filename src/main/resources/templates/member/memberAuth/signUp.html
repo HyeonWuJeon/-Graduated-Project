@@ -147,15 +147,15 @@
             success: function (data) {
                 console.log("결과 데이터"+ data);
                 let json = $.parseJSON(data);
-                alert("값확인");
                 if(json['httpCode'] == "401"){
+                    console.log("결과 데이터"+ data);
                     alert("입력값을 확인해주세요!")
 
                 }
                 else if(json['httpCode'] == "200"){
                     location.href="/member/login"
                 } else{
-                    alert("오류입니다 관리자에게 문의하세요")
+                    alert("오류입니다 관리자에게 문의하세요 500ERROR")
                 }
 
             }
