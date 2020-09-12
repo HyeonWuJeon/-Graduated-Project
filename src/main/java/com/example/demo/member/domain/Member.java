@@ -34,7 +34,7 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     @Column
-    @Length(max =200)
+    @Length(max =1)
     @NotBlank
     private String name; //이름
 
@@ -47,11 +47,11 @@ public class Member extends BaseTimeEntity {
 //    @Pattern(regexp = "^[[0-9]$@$!%*#?&]{10,20}$")
     private String password; //비밀번호
 
-    @Length(max = 1)
+    @Length(max = 11)
     @NotBlank
     private String birth; //생년월일
 
-   @Length(max = 11)
+    @Length(max = 11)
     @NotBlank
     private String phone; //휴대폰번호
 

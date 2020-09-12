@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.UnexpectedRollbackException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -120,12 +121,32 @@ public class MemberServiceApiTest {
                 .phone("010-111-222")
                 .role(Role.GUEST)
                 .build());
-
-//        em.flush();
-        //then
         fail("예외가 발생해야 한다"); //호출즉시 테스트케이스가 실패로 판정하는 단정문
 
     }
+
+    @Test(expected = UnexpectedRollbackException.class)
+    public void 트랜잭션정책() throws Exception {
+        //given
+        MemberSaveRequestDto member = new MemberSaveRequestDto();
+        Address address = new Address("경기도", "광명시", "어딘가");
+
+        //when
+        memberService.SignUp(member.builder()
+                .name("1")
+                .address(address)
+                .birth("1995-11-29")
+                .email("admin@mail.com")
+                .password("12345")
+                .phone("010-111-222")
+                .role(Role.GUEST)
+                .build());
+
+        //then
+        fail("강제 롤백으로 인한 commit 오류");
+
+    }
+
 
 
 

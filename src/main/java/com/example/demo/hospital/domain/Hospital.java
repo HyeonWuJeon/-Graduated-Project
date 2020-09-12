@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -16,16 +17,17 @@ import javax.persistence.*;
 public class Hospital {
 
     @Id @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Column(name = "hospital_id", nullable = false)
+    @Column(name = "hospital_id")
     private Long id;
 
-    @Column(name = "hospital_name", nullable = false)
+    @Column(name = "hospital_name")
     private String name;
 
-    @Column(name = "hospital_tel", nullable = false)
+    @Column(name = "hospital_tel")
     private String tel;
 
-    @Column(name = "hospital_address", nullable = false)
+    @Column(name = "hospital_address")
+    @NotBlank
     private String address;
 
     @OneToOne

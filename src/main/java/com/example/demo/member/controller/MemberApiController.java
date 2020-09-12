@@ -1,10 +1,7 @@
 package com.example.demo.member.controller;
 
-import com.example.demo.config.ApplicationService;
 import com.example.demo.config.aop.LoginUser;
 import com.example.demo.hospital.domain.Hospital;
-import com.example.demo.member.domain.Address;
-import com.example.demo.member.domain.Member;
 import com.example.demo.member.dto.MemberSaveRequestDto;
 import com.example.demo.member.dto.MemberUpdatePwd;
 import com.example.demo.member.dto.MemberUpdateRequestDto;
@@ -16,11 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.session.FindByIndexNameSessionRepository;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.ConstraintViolationException;
-import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor

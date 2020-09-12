@@ -1,11 +1,10 @@
 package com.example.demo.member.service;
 
-import com.example.demo.config.ApplicationService;
+import com.example.demo.config.service.ApplicationService;
 import com.example.demo.config.security.Role;
 import com.example.demo.diagnosis.domain.Diagnosis;
 import com.example.demo.diagnosis.repository.DiagnosisRepository;
 import com.example.demo.diagnosis.service.DiagnosisService;
-import com.example.demo.hospital.domain.Hospital;
 import com.example.demo.hospital.repository.HospitalRepository;
 import com.example.demo.hospital.service.HospitalService;
 import com.example.demo.member.domain.Address;
@@ -26,21 +25,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-//@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class MemberService extends ApplicationService implements UserDetailsService  {
 
     private final DiagnosisRepository diagnosisRepository;
@@ -50,21 +44,10 @@ public class MemberService extends ApplicationService implements UserDetailsServ
     private final HospitalService hospitalService;
     private final HospitalRepository hospitalRepository;
 
-    /**
-     * FUNCTION :: 기본 EXCEPTION 처리
-     * 트랙잭션 결과를 항상 롤백하도록 처리
-     * 입력된 결과 값을 결과 객체에 세팅
-     *
-     * @param rtnMap
-     * @param result
-     */
-    public void defaultExceptionHandling(Map<String, Object> rtnMap, String result) {
-        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-        rtnMap.put("httpCode", result);
-    }
+
 
     // 회원가입 아이디 중복체크
-    @Transactional(readOnly = true)
+    @Transactional
     public int validateDuplicateMember(String user_email) {
         String value = user_email;
         value = value.substring(1, value.length() - 1);
@@ -89,60 +72,49 @@ public class MemberService extends ApplicationService implements UserDetailsServ
 
     /**
      * FUNCTION : 회원 가입
+     * 하아... 런타임익셉션떠도 롤백이안되서 자동코밋되므로 오류ㅜ가뜬다...
      * @param form
      * @return
      */
-    @Transactional
-    public String SignUp(MemberSaveRequestDto form) {
+    public String SignUp(MemberSaveRequestDto form)  {
         HashMap<String, Object> rtnMap = returnMap();
-        try {
+//        try {
             MemberSaveRequestDto member = new MemberSaveRequestDto();
-            //주소 지정
-            Address address2 = member.setAddress(form.getCity(), form.getZipcode(), form.getStreet());
+        //주소 지정
+        Address address2 = member.setAddress(form.getCity(), form.getZipcode(), form.getStreet());
 
-            //패스워드 암호화
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            form.SHA256_PassWord(passwordEncoder.encode(form.getPassword()));
+        //패스워드 암호화
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        form.SHA256_PassWord(passwordEncoder.encode(form.getPassword()));
 
-            //권한 부여
-            if (form.getRole() == Role.GUEST) {
-                form.GIVE_Role(Role.GUEST);
-            } else if (form.getRole() == Role.VET) {
-                form.GIVE_Role(Role.VET);
-            }
-
-
-            //저장 + 유효성 검사
-            memberRepository.save(member.builder()
-                    .name(form.getName())
-                    .birth(form.getBirth())
-                    .email(form.getEmail())
-                    .password(form.getPassword())
-                    .phone(form.getPhone())
-                    .role(form.getRole())
-                    .address(address2)
-                    .build().toEntity());
-
-            rtnMap.put(AJAX_RESULT_TEXT, AJAX_RESULT_SUCCESS); //성공
-
-        } catch (ConstraintViolationException e) {
-            /**
-             * UnexpectedRollbackException 확인해보기
-             */
-            log.info("유효성검사 실패");
-            log.info("Error content [" + e +"]");
-            rtnMap.put(AJAX_RESULT_TEXT,AJAX_RESULT_ILLEGAL_STATE); //유효성 검사 실패
-        }  catch(Exception e){
-            System.out.println(" 설마여기도?");
-            defaultExceptionHandling(rtnMap, AJAX_RESULT_FAIL); // 예기지 못한 에러
+        //권한 부여
+        if (form.getRole() == Role.GUEST) {
+            form.GIVE_Role(Role.GUEST);
+        } else if (form.getRole() == Role.VET) {
+            form.GIVE_Role(Role.VET);
         }
 
+        //저장 + 유효성 검사
+        memberRepository.save(member.builder()
+                .name(form.getName())
+                .birth(form.getBirth())
+                .email(form.getEmail())
+                .password(form.getPassword())
+                .phone(form.getPhone())
+                .role(form.getRole())
+                .address(address2)
+                .build().toEntity()); // 터지는데
 
+        rtnMap.put(AJAX_RESULT_TEXT, AJAX_RESULT_SUCCESS); //성공
+//        }
+//        catch(ConstraintViolationException e){
+//            defaultExceptionHandling(rtnMap, AJAX_RESULT_ILLEGAL_STATE);
+//        }
         return jsonFormatTransfer(rtnMap);
     }
 
     // 회원 조회
-    @Transactional(readOnly = true)
+    @Transactional
     public Member findMember(Object id) {
         if (id instanceof Long) {
             return memberRepository.findById((Long) id)
