@@ -44,7 +44,7 @@ public class MemberController {
     public String createMember(Model model) {
         model.addAttribute("memberForm", new MemberForm());
 
-        return "member/memberAuth/signUp";
+        return "member/memberAuth/signup";
     }
 
     // 회원가입 API

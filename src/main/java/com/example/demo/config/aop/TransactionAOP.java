@@ -1,6 +1,7 @@
 package com.example.demo.config.aop;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -20,10 +21,10 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class TransactionAOP {
 
-    @Autowired
-    private PlatformTransactionManager transactionManager; // LINE :: 각 DB 설정에서 설정한 PlatformTransactionManager 객체
+    private final PlatformTransactionManager transactionManager; // LINE :: 각 DB 설정에서 설정한 PlatformTransactionManager 객체
 
     private static final String EXPRESSION = "execution(* com.example.demo..service.*Service.*(..)))"; // LINE :: 포인트 컷
 
