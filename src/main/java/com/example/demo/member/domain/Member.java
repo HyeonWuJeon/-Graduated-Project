@@ -34,7 +34,7 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     @Column
-    @Length(max =1)
+    @Length(max = 1)
     @NotBlank
     private String name; //이름
 

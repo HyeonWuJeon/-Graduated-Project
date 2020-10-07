@@ -15,7 +15,9 @@ import java.util.Map;
 public class ApplicationService {
     public final Logger log = LoggerFactory.getLogger(this.getClass());
 
+
     public static final String AJAX_RESULT_TEXT = "httpCode";
+
 
     // LINE :: AJAX 결과 코드 ====================================================================================================================================================
     public static final String AJAX_RESULT_SUCCESS = "200";         // 성공
@@ -30,11 +32,13 @@ public class ApplicationService {
     public static final String AJAX_RESULT_PAY_WAIT = "603";        // 결제 대기
     public static final String AJAX_RESULT_LOGIN_BLOCK = "LB";        // 결제 대기
 
+
     public static final String AJAX_RESULT_FILE_UPLOADFAIL = "FUF";
     public static final String AJAX_RESULT_FILE_EXTMISSMATCH = "FEM";
     public static final String AJAX_RESULT_FILE_IOEXCEPTION = "FIO";
     public static final String AJAX_RESULT_FILE_TOOMANYFILES = "TMF";
     public static final String AJAX_RESULT_FILE_FILEALREADYLIMITED = "FAL";
+
 
     public static final String AJAX_RESULT_UNSUPPORTEDENCODING = "USD";
     public static final String AJAX_RESULT_ENCODER = "ECD";
@@ -67,8 +71,9 @@ public class ApplicationService {
     private HttpSession getSession() {
         return request.getSession(true);
     }
-//
-//    public void setHospitalAdminSessionId(String id) {
+
+
+    //    public void setHospitalAdminSessionId(String id) {
 //        getSession().setAttribute(HOSPITAL_ADMIN_SESSION_ID, id);
 //    }
 //

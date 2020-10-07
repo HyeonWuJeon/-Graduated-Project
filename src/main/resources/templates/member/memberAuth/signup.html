@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/config :: configFragment"/>
+<!--<head th:replace="fragments/config :: configFragment"/>-->
 <body>
-<header th:replace="fragments/header :: headerFragment"></header>
+<!--<header th:replace="fragments/header :: headerFragment"></header>-->
 
 <div class="limiter">
     <div class="container-login100" style="background-image: url('/static/images/bg-01.jpg');">
@@ -140,7 +140,7 @@
 
 
         $.ajax({
-            url: "/api/member/signup/",
+            url: "/api/member/signup",
             cache: false,
             type: "POST",
             data: formData,
@@ -155,7 +155,7 @@
                 else if(json['httpCode'] == "200"){
                     location.href="/member/login"
                 } else{
-                    alert("오류입니다 관리자에게 문의하세요 500ERROR")
+                    alert("오류입니다 관리자에게 문의하세요.")
                 }
 
             }

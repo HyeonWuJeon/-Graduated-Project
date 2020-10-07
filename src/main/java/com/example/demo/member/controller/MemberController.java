@@ -36,7 +36,7 @@ public class MemberController extends ApplicationService {
     public String createMember(Model model) {
         model.addAttribute("memberForm", new MemberForm());
 
-        return "member/memberAuth/signUp";
+        return "member/memberAuth/signup";
     }
 
     // 로그인

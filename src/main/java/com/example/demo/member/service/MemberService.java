@@ -27,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -35,18 +36,20 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MemberService extends ApplicationService implements UserDetailsService  {
+public class MemberService extends ApplicationService implements UserDetailsService {
 
     private final DiagnosisRepository diagnosisRepository;
+
     private final MemberRepository memberRepository;
+
     private final DiagnosisService diagnosisService;
+
     private final ReserveService reserveService;
+
     private final HospitalService hospitalService;
+
     private final HospitalRepository hospitalRepository;
 
-
-
-    // 회원가입 아이디 중복체크
     @Transactional
     public int validateDuplicateMember(String user_email) {
         String value = user_email;
@@ -58,7 +61,6 @@ public class MemberService extends ApplicationService implements UserDetailsServ
         hashMap.put(entry[0].trim(), entry[1].trim());
 
         String value2 = hashMap.values().toString().substring(2, hashMap.values().toString().length() - 2);
-
 
         Member findMember = memberRepository.findEmailCheck(value2);
         System.out.println("findMember확인 = " + findMember);
@@ -72,14 +74,13 @@ public class MemberService extends ApplicationService implements UserDetailsServ
 
     /**
      * FUNCTION : 회원 가입
-     * 하아... 런타임익셉션떠도 롤백이안되서 자동코밋되므로 오류ㅜ가뜬다...
+     *
      * @param form
      * @return
      */
-    public String SignUp(MemberSaveRequestDto form)  {
+    public String SignUp(MemberSaveRequestDto form) {
         HashMap<String, Object> rtnMap = returnMap();
-//        try {
-            MemberSaveRequestDto member = new MemberSaveRequestDto();
+        MemberSaveRequestDto member = new MemberSaveRequestDto();
         //주소 지정
         Address address2 = member.setAddress(form.getCity(), form.getZipcode(), form.getStreet());
 
@@ -94,6 +95,7 @@ public class MemberService extends ApplicationService implements UserDetailsServ
             form.GIVE_Role(Role.VET);
         }
 
+
         //저장 + 유효성 검사
         memberRepository.save(member.builder()
                 .name(form.getName())
@@ -106,10 +108,7 @@ public class MemberService extends ApplicationService implements UserDetailsServ
                 .build().toEntity()); // 터지는데
 
         rtnMap.put(AJAX_RESULT_TEXT, AJAX_RESULT_SUCCESS); //성공
-//        }
-//        catch(ConstraintViolationException e){
-//            defaultExceptionHandling(rtnMap, AJAX_RESULT_ILLEGAL_STATE);
-//        }
+
         return jsonFormatTransfer(rtnMap);
     }
 
@@ -125,6 +124,7 @@ public class MemberService extends ApplicationService implements UserDetailsServ
         }
 
     }
+
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         Member userEntityWrapper = memberRepository.findEmailCheck(userEmail);
@@ -203,8 +203,6 @@ public class MemberService extends ApplicationService implements UserDetailsServ
                 .map(MemberResponseDto::new)
                 .collect(Collectors.toList());
     }
-
-
     public String mockTest() {
         return "whteship";
     }
