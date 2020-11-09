@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.7.RELEASE'
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 }
@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -34,8 +35,12 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-logging
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: '2.0.3.RELEASE'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux
-	//WebTestClient
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.3.2.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+	// https://mvnrepository.com/artifact/io.projectreactor.netty/reactor-netty
+	compile group: 'io.projectreactor.netty', name: 'reactor-netty'
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+
 
 
 	compile('org.springframework.session:spring-session-jdbc')
@@ -47,8 +52,8 @@ dependencies {
 	compile("org.mariadb.jdbc:mariadb-java-client")
 
 //	json handling
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.3'
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.3'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
 	compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
 	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
 	implementation('org.springframework.boot:spring-boot-starter-validation')
