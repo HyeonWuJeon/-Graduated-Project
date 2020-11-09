@@ -12,19 +12,18 @@ spring:
 # show_sql: true
 # format_sql: true
 # open-in-view: false
-logging.level:
-  org.hibernate.SQL: info
+  logging.level:
+    org.hibernate.SQL: info
 # org.hibernate.type: trace
 
-#spring:
 #  session:
-#    store-type: jdbc
-#  datasource:
-#    platform: h2
-#    url: jdbc:h2:tcp://localhost/~/guhaedog
-#    username: sa
-#    password:
-#    driver-class-name: org.h2.Driver
+#    store-type: jdbckakao
+  datasource:
+    platform: h2
+    url: jdbc:h2:tcp://localhost/~/guhaedog
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 #    sql-script-encoding: UTF-8
 #  jpa:
 #    database-platform: H2
@@ -37,11 +36,11 @@ logging.level:
 #hyeon:
 #  name: "hyeonwoo"
 
-  level:
-    ROOT: INFO
-    org.hibernate: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    org.springframework.orm: TRACE
-    org.springframework.transaction: TRACE
-    com.zaxxer.hikari: TRACE
-    com.mysql.cj.jdbc: TRACE
+#  level:
+#    ROOT: INFO
+#    org.hibernate: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+#    org.springframework.orm: TRACE
+#    org.springframework.transaction: TRACE
+#    com.zaxxer.hikari: TRACE
+#    com.mysql.cj.jdbc: TRACE
