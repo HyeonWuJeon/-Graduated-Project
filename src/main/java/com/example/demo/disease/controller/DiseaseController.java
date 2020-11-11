@@ -59,11 +59,11 @@ public class DiseaseController {
     @GetMapping("/admin/diseases")
     @LogExecutionTime
     public String DiseaseInfoPage(Model model) {
-        List<DiseaseResponseDto> diseasesAll = diseaseService.findAllDesc();
+//        List<DiseaseResponseDto> diseasesAll = diseaseService.findAllDesc();
         List<DiagnosisNameCountDto> diagnosisNames = diagnosisService.findNameCount();
         List<DogTypeCountDto> dogCounts = dogService.findDogCount();
 
-        model.addAttribute("dis", diseasesAll);
+//        model.addAttribute("dis", diseasesAll);
         model.addAttribute("diagName", diagnosisNames);
         model.addAttribute("symptomForm", new SymptomForm());
         model.addAttribute("dogCount", dogCounts);
@@ -88,16 +88,16 @@ public class DiseaseController {
     // 외부 API와 연동
     @PostMapping("/api/disease/form")
     @LogExecutionTime
-    public String callAPI_put(@Valid DiseaseForm form, Model model, @LoginFindMember Member member) throws JsonProcessingException {
+    public String callAPI_put(DiseaseForm form, Model model, @LoginFindMember Member member) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://15.165.169.119:5000/test";
-        //String url = "http://localhost:80/test";
+//        String url = "http://15.165.169.119:5000/test";
+        String url = "http://localhost:80/test";
 
 
 
         MultiValueMap<String,String> parameters = new LinkedMultiValueMap<String,String>();
-        Diagnosis diagnosis = new Diagnosis();
+//        Diagnosis diagnosis = new Diagnosis();
 
         for(int i = 0; i < form.getSymptom().size(); i++) {
             parameters.add("증상" + i, form.getSymptom().get(i));
@@ -116,8 +116,8 @@ public class DiseaseController {
             HttpHeaders header = new HttpHeaders();
             HttpEntity<?> entity = new HttpEntity<>(header); // 값 받기
 
-            String url2 = "http://15.165.169.119:5000/test";
-           // String url2 = "http://localhost:80/test";
+//            String url2 = "http://15.165.169.119:5000/test";
+            String url2 = "http://localhost:80/test";
             ResponseEntity<Object> resultMap = restTemplate.exchange(url2, HttpMethod.POST,entity, Object.class);
 
             result.put("Statuscode", resultMap.getStatusCodeValue());
@@ -150,7 +150,7 @@ public class DiseaseController {
 
         if(member != null) {
             model.addAttribute("member", member);
-            model.addAttribute("diagnosis", jsonObj.get("data"));
+            model.addAttribute("diagnosis", jsonObj.get("data")); // 가장 확률이 높은 질병
             model.addAttribute("macak", jsonObj.get("마카다미아너트 중독증"));
             model.addAttribute("corna", jsonObj.get("코로나 바이러스"));
             model.addAttribute("bronchus", jsonObj.get("기관지 확장증"));

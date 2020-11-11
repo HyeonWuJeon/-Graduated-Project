@@ -1,6 +1,7 @@
 package com.example.demo.diagnosis.domain;
 
 
+import com.example.demo.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,15 +13,19 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
-public class Corna  {
+@DiscriminatorValue("Corna")
+public class Corna extends Diagnosis {
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String percent;
 
+
+    protected Corna() {
+        super();
+    }
     @Builder
-    public Corna(String percent) {
+    public Corna(String percent, Member member, String dog)
+    {
+        super(dog, member);
         this.percent = percent;
     }
 

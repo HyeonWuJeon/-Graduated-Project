@@ -25,12 +25,12 @@ spring:
     password:
     driver-class-name: org.h2.Driver
 #    sql-script-encoding: UTF-8
-#  jpa:
+  jpa:
 #    database-platform: H2
 #    show-sql: true
 #    properties:
-#    hibernate:
-#      ddl-auto: create-drop
+    hibernate:
+      ddl-auto: create-drop
 #  security:
 #    enable-csrf: false
 #hyeon:

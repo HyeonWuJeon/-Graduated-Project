@@ -56,7 +56,7 @@ public class DiagnosisApiController {
         parameters.add("random_state", form.getRandom_state()); // LINE :: 가지수
         parameters.add("test_size", form.getTest_size()); // LINE :: 테스트 사이즈
 
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url,parameters,String.class);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url,parameters,String.class); // LINE :: 파라메타 전송
 
     }
 }

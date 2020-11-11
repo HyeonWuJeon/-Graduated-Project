@@ -1,6 +1,7 @@
 package com.example.demo.diagnosis.domain;
 
 import com.example.demo.member.domain.Member;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,9 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Embeddable
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorColumn(name = "disease_type")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Diagnosis {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,17 +26,24 @@ public class Diagnosis {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String name; // 진단 질병명
+//    private String name; // 진단 질병명
     private String dog;
-    private String type;
+//    private String type;
+//
+//    private String percent;
+//
+//    @OneToOne
+//    private Corna corna;
+//    @OneToOne
+//    private Macak macak;
+//    @OneToOne
+//    private Air air;
 
-    @OneToOne
-    private Corna corna;
-    @OneToOne
-    private Macak macak;
-    @OneToOne
-    private Air air;
 
-
-
+    public Diagnosis(String dog, Member member) {
+        this.dog =dog;
+        this.member = member;
+//        this.name = name;
+//        this.type = type;
+    }
 }
