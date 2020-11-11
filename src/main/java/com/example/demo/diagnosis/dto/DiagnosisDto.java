@@ -23,10 +23,10 @@ public class DiagnosisDto {
     public DiagnosisDto(Diagnosis entity){
         this.id = entity.getId();
         this.member = entity.getMember();
-        this.name = entity.getName();
-        this.corna = entity.getCorna();
-        this.macak = entity.getMacak();
-        this.air = entity.getAir();
+//        this.name = entity.getName();
+//        this.corna = entity.getCorna();
+//        this.macak = entity.getMacak();
+//        this.air = entity.getAir();
         this.dog = entity.getDog();
     }
 }

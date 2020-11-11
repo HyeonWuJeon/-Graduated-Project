@@ -52,7 +52,7 @@ public class DiagnosisApiController {
         parameters.add("random_state", form.getRandom_state());
         parameters.add("test_size", form.getTest_size());
 
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url,parameters,String.class);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url,parameters,String.class); // LINE :: 파라메타 전송
 
         List<DiseaseResponseDto> diseasesAll = diseaseService.findAllDesc();
         List<DiagnosisNameCountDto> diagnosisNames = diagnosisService.findNameCount();
