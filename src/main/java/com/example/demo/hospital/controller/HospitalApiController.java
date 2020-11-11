@@ -1,5 +1,6 @@
 package com.example.demo.hospital.controller;
 
+import com.example.demo.config.aop.LogExecutionTime;
 import com.example.demo.config.aop.LoginFindMember;
 import com.example.demo.hospital.domain.Hospital;
 
@@ -12,6 +13,8 @@ import com.example.demo.reserve.dto.ReserveUpdateRequestDto;
 import com.example.demo.reserve.service.ReserveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequiredArgsConstructor
@@ -77,5 +80,15 @@ public class HospitalApiController {
         reserveService.delete(id);
 
         return id;
+    }
+
+    private final AtomicInteger atomicInteger = new AtomicInteger();
+
+    @GetMapping("/3second")
+    @LogExecutionTime
+    public String threeSecond() throws InterruptedException {
+        AtomicInteger atomicInteger = new AtomicInteger(); //?
+        Thread.sleep(3000);
+        return "success - " + this.atomicInteger.incrementAndGet();
     }
 }
