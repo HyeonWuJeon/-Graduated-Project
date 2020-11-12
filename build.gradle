@@ -43,7 +43,7 @@ dependencies {
 
 
 
-	compile('org.springframework.session:spring-session-jdbc')
+	compile('org.springframework.session:spring-session-jdbc') // 세션 사용
 	implementation 'org.springframework.session:spring-session-core'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 

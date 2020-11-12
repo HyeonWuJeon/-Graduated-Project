@@ -17,6 +17,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn(name = "disease_type")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Diagnosis_table")
 public class Diagnosis {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
