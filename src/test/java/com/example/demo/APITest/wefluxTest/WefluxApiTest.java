@@ -12,6 +12,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -25,9 +27,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = DEFINED_PORT, properties = {"server.port=8080"})
 @AutoConfigureWebTestClient
-public class WefluxApiTest{
+public class WefluxApiTest {
 
-    private static final String THREE_SECOND_URL = "http://localhost:8080/3second";
+    private static final String URL = "http://localhost:80/test";
     private static final int LOOP_COUNT = 100;
 
     private final WebClient webClient = WebClient.create();
@@ -41,90 +43,27 @@ public class WefluxApiTest{
         System.setProperty("reactor.netty.ioWorkerCount", "1");
     }
 
+    /**
+     * AI 서비스 테스트
+     */
     @Test
     public void blocking() {
-        final RestTemplate restTemplate = new RestTemplate();
+        //given
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
+        parameters.add("증상0", "거리감각불능");
+        parameters.add("증상1", "탈모");
+        parameters.add("증상2", "난청");
 
+        final RestTemplate restTemplate = new RestTemplate();
+        HttpEntity httpEntity = new HttpEntity(parameters,parameters);
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
-        for (int i = 0; i < 3; i++) {
-            final ResponseEntity<String> response =
-                    restTemplate.exchange(THREE_SECOND_URL, HttpMethod.GET, HttpEntity.EMPTY, String.class);
-            assertThat(response.getBody()).contains("success");
-        }
-
+        final ResponseEntity<String> response =
+                restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
+//        assertThat(response.getBody()).contains("success");
         stopWatch.stop();
 //
-        System.out.println(" 총 시간 : "  + stopWatch.getTotalTimeSeconds());
-    }
-
-    @Test
-    public void nonBlocking1() throws InterruptedException {
-        final StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-
-        this.webClient
-                .get()
-                .uri(THREE_SECOND_URL)
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnNext(System.out::println)
-                .subscribe();
-
-        stopWatch.stop();
-
-        System.out.println(" 총 시간  : " + stopWatch.getTotalTimeSeconds());
-
-        Thread.sleep(5000);
-    }
-
-    @Test
-    public void thread() {
-        System.out.println(1);
-
-        new Thread(() -> System.out.println(2)).start();
-
-        System.out.println(3);
-    }
-
-    @Test
-    public void nonBlocking2() throws InterruptedException {
-        final StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-
-        this.webClient
-                .get()
-                .uri(THREE_SECOND_URL)
-                .retrieve()
-                .bodyToMono(String.class)
-                .log()
-                .subscribe(it -> {
-                    stopWatch.stop();
-                    System.out.println(stopWatch.getTotalTimeSeconds());
-                });
-
-        Thread.sleep(5000);
-    }
-
-    @Test
-    public void nonBlocking3() throws InterruptedException {
-        final StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        for (int i = 0; i < LOOP_COUNT; i++) {
-            this.webClient
-                    .get()
-                    .uri(THREE_SECOND_URL)
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .subscribe(it -> {
-                        count.countDown();
-                        System.out.println(it);
-                    });
-        }
-
-        count.await(10, TimeUnit.SECONDS);
-        stopWatch.stop();
-        System.out.println(stopWatch.getTotalTimeSeconds());
+        System.out.println(" 총 시간 : " + stopWatch.getTotalTimeSeconds());
     }
 }

@@ -30,7 +30,7 @@ spring:
 #    show-sql: true
 #    properties:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 #  security:
 #    enable-csrf: false
 #hyeon:
