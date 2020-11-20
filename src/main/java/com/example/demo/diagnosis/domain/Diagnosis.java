@@ -13,7 +13,6 @@ import static javax.persistence.FetchType.LAZY;
 @Getter
 @Entity
 @Embeddable
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn(name = "disease_type")
 @Inheritance(strategy = InheritanceType.JOINED)
