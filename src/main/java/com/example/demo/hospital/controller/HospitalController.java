@@ -60,7 +60,7 @@ public class HospitalController {
     public String readMyHospital(Model model, @LoginFindMember Member member) {
 
         if(member.getHospital() == null) {
-            return "home";      // 동물병원 등록 페이지 redirect
+            return "hospital/registration";      // 동물병원 등록 페이지 redirect
         }
 
         HospitalResponseDto hospitalDto = hospitalService.findById(member.getHospital().getId());

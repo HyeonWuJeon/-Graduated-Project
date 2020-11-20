@@ -82,13 +82,4 @@ public class HospitalApiController {
         return id;
     }
 
-    private final AtomicInteger atomicInteger = new AtomicInteger();
-
-    @GetMapping("/3second")
-    @LogExecutionTime
-    public String threeSecond() throws InterruptedException {
-        AtomicInteger atomicInteger = new AtomicInteger(); //?
-        Thread.sleep(3000);
-        return "success - " + this.atomicInteger.incrementAndGet();
-    }
 }
