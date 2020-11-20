@@ -192,4 +192,5 @@ public class MemberServiceApiTest {
 
         fail("사용자 없음"); //expected 제외할 경우 해당 문구가 뜬다.
     }
+
 }

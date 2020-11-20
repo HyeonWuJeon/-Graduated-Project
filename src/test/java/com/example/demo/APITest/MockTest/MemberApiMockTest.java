@@ -4,6 +4,8 @@ import com.example.demo.member.domain.Address;
 import com.example.demo.member.domain.Member;
 import com.example.demo.member.dto.MemberUpdateRequestDto;
 import com.example.demo.member.service.MemberService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.annotations.LazyToOne;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +25,7 @@ import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2Aut
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserter;
 
 import javax.persistence.EntityManager;
@@ -31,6 +34,7 @@ import javax.persistence.PersistenceContext;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -46,6 +50,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@AutoConfigureWebTestClient //webTestClient 빈을 만들어준다!
 @AutoConfigureMockMvc //McokMvc라는 클라이언트를 사용한다 -->
+@Transactional
 public class MemberApiMockTest {
 
 
@@ -53,8 +58,6 @@ public class MemberApiMockTest {
      * 서블릿기반에 웹MVC가아닌 비동기Call을 하는 web-flux
      * 아래의 WebTestClient는 논블럭킹 + 비동기 call을 지원한다. restTemplate의 대체자로 불린다.
      */
-
-
     @Autowired
     WebTestClient webTestClient;
 
@@ -98,6 +101,7 @@ public class MemberApiMockTest {
      */
     @Test
     public void ApiTEst() throws Exception {
+
         mockMvc.perform(get("/api/Test.htm"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -107,14 +111,13 @@ public class MemberApiMockTest {
 
     }
 
-    @Test
-    public void MockingWebFlux() throws Exception {
-        when(memberService.mockTest()).thenReturn("hyunwoo");
-        webTestClient.get().uri("/mockTest").exchange()
-                .expectStatus().isOk()
-                .expectBody(String.class).isEqualTo("hyunwoo");
-    }
-
+//    @Test
+//    public void MockingWebFlux() throws Exception {
+//        when(memberService.mockTest()).thenReturn("hyunwoo");
+//        webTestClient.get().uri("/mockTest").exchange()
+//                .expectStatus().isOk()
+//                .expectBody(String.class).isEqualTo("hyunwoo");
+//    }
 
     @Test
     public void 회원수정WebFlux() throws Exception {
@@ -157,4 +160,20 @@ public class MemberApiMockTest {
         fail("사용자 없음"); //expected 제외할 경우 해당 문구가 뜬다.
     }
 
+    @Test
+    public void checkEmail() throws Exception {
+        //given
+        String email = "admin5@gmail.com";
+        Member member = new Member();
+        member.setEmail(email);
+        em.persist(member);
+        em.flush();
+        String url = "http://localhost:" + port + "/api/checkEmail";
+        //when
+        mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsBytes(email)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }
