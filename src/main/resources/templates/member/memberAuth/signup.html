@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<!--<head th:replace="fragments/config :: configFragment"/>-->
+<head th:replace="fragments/config :: configFragment"/>
 <body>
-<!--<header th:replace="fragments/header :: headerFragment"></header>-->
+<header th:replace="fragments/header :: headerFragment"></header>
 
 <div class="limiter">
     <div class="container-login100" style="background-image: url('/static/images/bg-01.jpg');">
@@ -128,7 +128,6 @@
 
     function signup() {
         const formData = $('#member_signup').serialize();
-
         if(idChk == false){
             alert("아이디를 확인 해주세요!")
             return false;
@@ -138,50 +137,44 @@
             return false;
         }
 
-
+        console.log(formData);
         $.ajax({
             url: "/api/member/signup",
-            cache: false,
             type: "POST",
+            cache: false,
             data: formData,
-            success: function (data) {
-                console.log("결과 데이터"+ data);
-                let json = $.parseJSON(data);
-                if(json['httpCode'] == "401"){
-                    console.log("결과 데이터"+ data);
-                    alert("입력값을 확인해주세요!")
-
-                }
-                else if(json['httpCode'] == "200"){
-                    location.href="/member/login"
-                } else{
+            success: function (data, status) {
+                if (status == 401) {
+                    alert("입력값을 확인해주세요!");
+                } else if (status == 'success') {
+                    location.href = "/member/login"
+                } else {
+                    console.log(status);
                     alert("오류입니다 관리자에게 문의하세요.")
                 }
-
+            },
+            error: function (request, status, error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         })
-
     }
 
-    // 아이디 유효성 검사(1 = 중복 / 0 != 중복)
+    // 아이디 유효성 검사
     $(document).ready(function () {
         $("#user_email").blur(function () {
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
                 url: "/api/checkEmail",
-                data: JSON.stringify({"user_email": $('#user_email').val()}),
-                dataType: 'json',
-                success: function (data) {
-                    console.log("1 = 중복이다 / 0 = 중복아니다 : " + data);
-
-                    if (data == 1) {
-                        // 1 : 이메일이 중복되는 문구
-                        $("#email_check").text("사용중인 이메일입니다. :p");
-                        $("#email_check").css("color", "red");
-                        $("#user_email").focus();
-                        idChk = false;
-                    } else { // 0
+                // dataType: 'text',
+                // dataType: 'json' // 응답 데이터 :: json
+                data: $('#user_email').val(),
+                success: function (data, status, jqXHR) {
+                        if(status == 'success'){
+                            $("#email_check").text("사용가능한 이메일입니다. :p");
+                            $("#email_check").css("color", "blue");
+                            idChk = true;
+                        }
                         // 공백일 때 이메일 입력 문구
                         if ($('#user_email').val() == "") {
                             $('#email_check').text('이메일을 입력해주세요. :)');
@@ -196,15 +189,19 @@
                             $("#user_email").focus();
                             idChk = false;
                             // 이메일이 사용가능한 문구
-                        } else {
-                            $("#email_check").text("사용가능한 이메일입니다. :p");
-                            $("#email_check").css("color", "blue");
-                            idChk = true;
                         }
-                    }
                 },
-                error: function () {
-                    console.log("실패");
+                error: function (request, status, error) {
+                    if (request.status == 302) {
+                        $("#email_check").text("사용중인 이메일입니다. :p");
+                        $("#email_check").css("color", "red");
+                        $("#user_email").focus();
+                        idChk = false;
+                    }
+                    else{
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error + "\n"+"status:"+status);
+                    }
+
                 }
             });
         });
