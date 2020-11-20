@@ -15,8 +15,8 @@
                     <div class="col-8 col-md-8 col-xl-6 ">
                         <div class="sub_header_social_icon float-right">
 
-                            <a class="btn_1 d-none d-md-inline-block"
-                               sec:authorize="isAnonymous()" href="/oauth2/authorization/google">Google Login</a>
+                            <!--<a class="btn_1 d-none d-md-inline-block"
+                               sec:authorize="isAnonymous()" href="/oauth2/authorization/google">Google Login</a>-->
                             <a class="btn_1 d-none d-md-inline-block"
                                sec:authorize="isAnonymous()" th:href="@{'/member/login'}">로그인</a>
                             <a class="btn_1 d-none d-md-inline-block"
@@ -87,16 +87,6 @@
 
                                     <li class="nav-item">
                                         <a sec:authorize="hasRole('ROLE_VET')" class="nav-link" th:href="@{/vet/myHospital}">동물병원 조회</a>
-                                    </li>
-
-                                    <li class="nav-item dropdown">
-                                        <a sec:authorize="hasRole('ROLE_VET')" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">구해독몰</a>
-
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a sec:authorize="hasRole('ROLE_VET')" class="dropdown-item" href="#">판매상품 등록</a>
-                                            <a sec:authorize="hasRole('ROLE_VET')" class="dropdown-item" href="#">판매상품 조회</a>
-                                            <a sec:authorize="hasRole('ROLE_VET')" class="dropdown-item" href="#">매출 조회</a>
-                                        </div>
                                     </li>
 
                                     <li class="nav-item">
