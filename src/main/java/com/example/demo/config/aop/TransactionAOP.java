@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.TransactionManager; // springboot 2.3
 import org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource;
 import org.springframework.transaction.interceptor.RollbackRuleAttribute;
 import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute;
