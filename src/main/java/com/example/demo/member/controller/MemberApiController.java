@@ -53,11 +53,6 @@ public class MemberApiController  {
         return id;
     }
 
-    @GetMapping("/mockTest")
-    public String mocktest(){
-        return memberService.mockTest();
-    }
-
     // 관리자가 회원정보를 수정하는 API
     @PutMapping("/admin/member/settings/{id}")
     public Long updateMember(@PathVariable Long id, @RequestBody MemberUpdateRequestDto requestDto) {
@@ -71,38 +66,27 @@ public class MemberApiController  {
         return id;
     }
 
-//    https://woowabros.github.io/experience/2019/01/29/exception-in-transaction.html
-//    Rollback Error
+//    https://woowabros.github.io/experience/2019/01/29/exception-in-transaction.html :: ROLLBACK ERROR 고찰 우아한형제들
 
     /**
-     * CONTROLLER : 회원가입
+     * CONTROLLER :: 회원가입
      * @param form
      * @return
      */
     @PostMapping(value = "/member/signup")
-    public String createMemberApi(MemberSaveRequestDto form) {
+    public ResponseEntity createMemberApi( MemberSaveRequestDto form) {
         return memberService.SignUp(form);
     }
 
-
-    @PostMapping("/checkEmail")
-    public int checkEmail(@RequestBody String user_email) {
-        return memberService.validateDuplicateMember(user_email);
-    }
-
-
     /**
-     * ResponseEntity Test
+     * CONTROLLER :: 이메일 중복 테스트
+     * @param user_email
      * @return
      */
-    @GetMapping("/Test.htm")
-    public ResponseEntity entityTest(){
-
-        Hospital hospital = new Hospital();
-        hospital.setTel("011");
-        hospital.setAddress("add");
-        hospital.setName("현우");
-
-        return new ResponseEntity<>(hospital, HttpStatus.OK);
+    @PostMapping("/checkEmail")
+    public ResponseEntity checkEmail(@RequestBody String user_email) {
+        memberService.validateDuplicateMember(user_email);
+        return new ResponseEntity(HttpStatus.OK);
     }
+
 }

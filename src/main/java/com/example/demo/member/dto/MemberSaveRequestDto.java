@@ -3,17 +3,25 @@ package com.example.demo.member.dto;
 import com.example.demo.config.security.Role;
 import com.example.demo.member.domain.Address;
 import com.example.demo.member.domain.Member;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 
 @RequiredArgsConstructor
-@Data
+@Getter@Setter
 public class MemberSaveRequestDto {
 
+    @Length(max = 50)
+    @NotBlank
     private String name;
+    @Length(max = 50)
     private String email;
+    @Length(max = 50)
     private String password;
     private String zipcode;
     private String city;
@@ -21,11 +29,11 @@ public class MemberSaveRequestDto {
     private Address address;
     private Role role;
     private String birth;
+    @Length(max = 11)
     private String phone;
 
     /**
      * FUNCTION : 패스워드 암호화
-     *
      * @param password
      */
     public void SHA256_PassWord(String password) {
@@ -34,7 +42,6 @@ public class MemberSaveRequestDto {
 
     /**
      * FUNCTION : 권한 확인 & 변경
-     *
      * @param role
      */
     public void GIVE_Role(Role role) {
@@ -43,7 +50,6 @@ public class MemberSaveRequestDto {
 
     /**
      * FUNCTION : 주소정보 저장
-     *
      * @param zipcode
      * @param city
      * @param street
@@ -56,14 +62,7 @@ public class MemberSaveRequestDto {
     }
 
     /**
-     * CONSTRUCTOR : 회원가입
-     *
-     * @param name
-     * @param email
-     * @param password
-     * @param role
-     * @param birth
-     * @param phone
+     * CONSTRUCTOR : 회원가입 builder 패턴
      */
     @Builder
     public MemberSaveRequestDto(Address address,String name, String email, String password, Role role, String birth, String phone) {
@@ -89,4 +88,3 @@ public class MemberSaveRequestDto {
                 .build();
     }
 }
-

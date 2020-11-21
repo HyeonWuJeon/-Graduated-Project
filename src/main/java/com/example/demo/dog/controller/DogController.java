@@ -1,6 +1,7 @@
 package com.example.demo.dog.controller;
 
 import com.example.demo.config.aop.LogExecutionTime;
+import com.example.demo.config.aop.LoginFindMember;
 import com.example.demo.dog.dto.DogResponseDto;
 import com.example.demo.dog.dto.DogSaveRequestDto;
 import com.example.demo.dog.service.DogService;
@@ -39,18 +40,22 @@ public class DogController {
 
     // 강아지 정보 저장 API
     @PostMapping(value = "/api/member/dog/save")
-    public String Dogcreate(@Valid DogForm form, BindingResult result, Principal principal,Model model) {
+    public String Dogcreate(@Valid DogForm form, BindingResult result, Principal principal,Model model, @LoginFindMember Member member) {
         if (result.hasErrors()) {
             return "member/dogs/dogSignUp";
         }
-
-        Member member = memberService.findMember(principal.getName()); //추후 ASPECT 적용대상
-
+//        Member member = memberService.findMember(principal.getName()); //추후 ASPECT 적용대상
+        // 강아지 정보 저장
         DogSaveRequestDto dog = new DogSaveRequestDto();
-
-
+        dogService.dog_SignUp(dog.builder()
+                .member(member)
+                .name(form.getName())
+                .type(form.getType())
+                .age(form.getAge())
+                .birth(form.getBirth())
+                .gender(form.getGender())
+                .build());
         List<DogResponseDto> Dogs = dogService.findAllDesc(member);
-
         model.addAttribute("dogs", Dogs);
         return "member/dogs/dogInfo";
     }
@@ -61,7 +66,6 @@ public class DogController {
     public String DogInfo(Model model, Principal principal) {
         Member member = memberService.findMember(principal.getName());//추후 ASPECT 적용대상
         List<DogResponseDto> Dogs = dogService.findAllDesc(member);
-
         model.addAttribute("dogs", Dogs);
         return "member/dogs/dogInfo";
     }
@@ -71,7 +75,6 @@ public class DogController {
     public String updateForm(@PathVariable Long id, Model model) {
         DogResponseDto dto = dogService.findById(id);
         model.addAttribute("dog", dto);
-
         return "member/dogs/dogModify";
     }
 
@@ -79,13 +82,9 @@ public class DogController {
     @GetMapping("/admin/member/{id}/dogs")
     public String adminDogInfo(@PathVariable Long id, Model model) {
         Member member = memberService.findMember(id);
-
-
         List<DogResponseDto> dogs = dogService.findAllDesc(member);
-
         model.addAttribute("member", member);
         model.addAttribute("dogs", dogs);
-
         return "dog/admin_dogInfo";
     }
 
@@ -94,7 +93,6 @@ public class DogController {
     public String adminDogSettings(@PathVariable Long id, Model model) {
         DogResponseDto dto = dogService.findById(id);
         model.addAttribute("dog", dto);
-
         return "dog/admin_dogSettings";
     }
 

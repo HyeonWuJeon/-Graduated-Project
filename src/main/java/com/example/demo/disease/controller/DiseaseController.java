@@ -97,7 +97,6 @@ public class DiseaseController {
 
 
         MultiValueMap<String,String> parameters = new LinkedMultiValueMap<String,String>();
-//        Diagnosis diagnosis = new Diagnosis();
 
         for(int i = 0; i < form.getSymptom().size(); i++) {
             parameters.add("증상" + i, form.getSymptom().get(i));

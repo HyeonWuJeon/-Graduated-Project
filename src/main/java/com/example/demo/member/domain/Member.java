@@ -6,10 +6,7 @@ import com.example.demo.config.security.Role;
 import com.example.demo.diagnosis.domain.Diagnosis;
 import com.example.demo.dog.domain.Dog;
 import com.example.demo.hospital.domain.Hospital;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -26,6 +23,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Setter
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Member extends BaseTimeEntity {
 
@@ -34,25 +32,18 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     @Column
-    @Length(max = 1)
-    @NotBlank
     private String name; //이름
 
-    @Column(length = 100)
-    @NotBlank
+    @Column
     private String email; //이메일
 
-    @NotBlank
-    @Column(length = 200)
-//    @Pattern(regexp = "^[[0-9]$@$!%*#?&]{10,20}$")
+    @Column
     private String password; //비밀번호
 
-    @Length(max = 11)
-    @NotBlank
+    @Column
     private String birth; //생년월일
 
-    @Length(max = 11)
-    @NotBlank
+    @Column
     private String phone; //휴대폰번호
 
     @Embedded
