@@ -1,14 +1,12 @@
 package com.example.demo.hospital.service;
 
-import com.example.demo.hospital.repository.HospitalRepository;
 import com.example.demo.hospital.domain.Hospital;
 import com.example.demo.hospital.dto.HospitalResponseDto;
 import com.example.demo.hospital.dto.HospitalSaveRequestDto;
-import com.example.demo.member.repository.MemberRepository;
-import com.example.demo.reserve.repository.ReserveRepository;
-
+import com.example.demo.hospital.repository.HospitalRepository;
 import com.example.demo.member.domain.Member;
 import com.example.demo.reserve.domain.Reserve;
+import com.example.demo.reserve.repository.ReserveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 public class HospitalService {
 
     private final HospitalRepository hospitalRepository;
-    private final MemberRepository memberRepository;
     private final ReserveRepository reserveRepository;
 
     // 관리자, 전체 동물병원 조회
@@ -33,6 +30,23 @@ public class HospitalService {
                 .map(HospitalResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    //개인 동물병원 조회
+    @Transactional(readOnly = true)
+    public Hospital findHospital(Object id) {
+
+
+        if(id instanceof Long ){
+            return hospitalRepository.findById((Long) id)
+                    .orElseThrow(()->new IllegalArgumentException("동물병원이 없습니다 = " + id));
+        }
+        else {
+            return hospitalRepository.findHospital((String) id)
+                    .orElseThrow(()-> new IllegalArgumentException("동물병원이 없습니다 = "+ id));
+        }
+    }
+
+
 
     // 수의사, 동물병원 등록
     @Transactional

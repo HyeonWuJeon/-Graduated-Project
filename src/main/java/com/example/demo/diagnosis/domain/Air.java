@@ -1,24 +1,33 @@
 package com.example.demo.diagnosis.domain;
 
+import com.example.demo.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Air {
+@DiscriminatorValue("Air")
+public class Air extends Diagnosis{
 
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String percent;
 
+    protected void setPercent(String percent) {
+        this.percent = percent;
+    }
+
+    public static void Percent(String percent){
+        Air air = new Air();
+        air.setPercent(percent);
+    }
+
     @Builder
-    public Air(String percent) {
+    public Air(String percent, String dog, Member member) {
+        super(dog, member);
         this.percent = percent;
     }
 }

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DogSaveRequestDto {
 
+    private Long id;
     private Member member;
     private String name;
     private String age;
