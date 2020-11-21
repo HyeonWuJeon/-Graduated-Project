@@ -1,5 +1,5 @@
 package com.example.demo.member.controller;
-import com.example.demo.config.Role;
+import com.example.demo.config.security.Role;
 import lombok.Getter;
 import lombok.Setter;
 
