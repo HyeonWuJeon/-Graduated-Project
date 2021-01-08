@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -52,7 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/admin/**").hasRole(Role.ADMIN.name()) // 관리자만 접근 허용
                 .antMatchers("/h2-console/*").permitAll()
                 .antMatchers("/resources/**").permitAll()
-//                .anyRequest().authenticated()
                 .and()//로그인
                 .formLogin()
                 .loginPage("/member/login") // 로그인 페이지
@@ -64,14 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .and()
                 //403 예외처리 핸들링 권한거부
-                .exceptionHandling().accessDeniedPage("/member/denied")
-                .and().headers().frameOptions().disable();
-        /* 구글 로그인 필터 */
-//                .and()
-//                    .oauth2Login()
-//                        .userInfoEndpoint()
-//                            .userService(customOAuth2UserService);
-
+                .exceptionHandling().accessDeniedPage("/member/denied");
     }
 
     /**
@@ -83,6 +76,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
     }
-
-
 }
