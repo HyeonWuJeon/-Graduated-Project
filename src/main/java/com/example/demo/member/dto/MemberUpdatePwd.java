@@ -13,6 +13,5 @@ public class MemberUpdatePwd {
     public MemberUpdatePwd(String password, String password2) {
         this.password=password;
         this.password2=password2;
-
     }
 }

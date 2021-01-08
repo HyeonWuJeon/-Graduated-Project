@@ -54,11 +54,8 @@ public class MemberSaveRequestDto {
      * @param city
      * @param street
      */
-    public Address setAddress(String city, String zipcode, String street) {
-        this.city = city;
-        this.zipcode = zipcode;
-        this.street = street;
-        return new Address(city, zipcode, street);
+    public void setAddress(String city, String zipcode, String street) {
+       address = new Address(city, zipcode, street);
     }
 
     /**

@@ -1,15 +1,12 @@
 package com.example.demo.member.controller;
 
-import com.example.demo.config.service.ApplicationService;
 import com.example.demo.config.aop.LogExecutionTime;
 import com.example.demo.config.aop.LoginFindMember;
 import com.example.demo.member.domain.Member;
 import com.example.demo.member.dto.MemberResponseDto;
 import com.example.demo.member.service.MemberService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping()
-public class MemberController extends ApplicationService {
+public class MemberController {
 
     private final MemberService memberService;
 

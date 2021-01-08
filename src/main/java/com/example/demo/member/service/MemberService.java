@@ -1,14 +1,11 @@
 package com.example.demo.member.service;
 
 import com.example.demo.config.exception.MemberDuplicationException;
-import com.example.demo.config.service.ApplicationService;
 import com.example.demo.config.security.Role;
 import com.example.demo.diagnosis.domain.Diagnosis;
 import com.example.demo.diagnosis.repository.DiagnosisRepository;
 import com.example.demo.diagnosis.service.DiagnosisService;
-import com.example.demo.hospital.repository.HospitalRepository;
 import com.example.demo.hospital.service.HospitalService;
-import com.example.demo.member.domain.Address;
 import com.example.demo.member.domain.Member;
 import com.example.demo.member.dto.MemberResponseDto;
 import com.example.demo.member.dto.MemberSaveRequestDto;
@@ -31,14 +28,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public  class MemberService extends ApplicationService implements UserDetailsService {
+public  class MemberService implements UserDetailsService {
 
 
     private final DiagnosisRepository diagnosisRepository;
@@ -67,19 +63,17 @@ public  class MemberService extends ApplicationService implements UserDetailsSer
 
     /**
      * FUNCTION : 회원 가입
-     *
      * @param form
      * @return
      */
     public ResponseEntity SignUp(MemberSaveRequestDto form) {
-        HashMap<String, Object> rtnMap = returnMap();
-        MemberSaveRequestDto member = new MemberSaveRequestDto();
         //주소 지정
-        Address address2 = member.setAddress(form.getCity(), form.getZipcode(), form.getStreet());
+        form.setAddress(form.getCity(), form.getZipcode(), form.getStreet());
 
         //패스워드 암호화
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         form.SHA256_PassWord(passwordEncoder.encode(form.getPassword()));
+
 
         //권한 부여
         if (form.getRole() == Role.GUEST) {
@@ -89,15 +83,7 @@ public  class MemberService extends ApplicationService implements UserDetailsSer
         }
 
         //회원정보 저장
-        memberRepository.save(member.builder()
-                .name(form.getName())
-                .birth(form.getBirth())
-                .email(form.getEmail())
-                .password(form.getPassword())
-                .phone(form.getPhone())
-                .role(form.getRole())
-                .address(address2)
-                .build().toEntity());
+        memberRepository.save(form.toEntity());
 
         return new ResponseEntity(HttpStatus.OK);
     }
