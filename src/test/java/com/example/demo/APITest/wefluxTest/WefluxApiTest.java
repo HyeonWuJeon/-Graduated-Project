@@ -15,7 +15,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -28,39 +30,63 @@ public class WefluxApiTest {
 
     private static final String URL = "http://localhost:80/test";
     private static final int LOOP_COUNT = 100;
+    static MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
 
     private final WebClient webClient = WebClient.create();
     private final CountDownLatch count = new CountDownLatch(LOOP_COUNT);
-
     @Autowired
     WebTestClient webTestClient;
 
     @Before
-    public void setup() {
+    public void setup() throws InterruptedException {
         System.setProperty("reactor.netty.ioWorkerCount", "1");
+
+        parameters.add("증상0", "거리감각불능");
+        parameters.add("증상1", "탈모");
+        parameters.add("증상2", "난청");
+
     }
 
     /**
      * AI 서비스 테스트
      */
     @Test
-    public void blocking() {
-        //given
-        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-        parameters.add("증상0", "거리감각불능");
-        parameters.add("증상1", "탈모");
-        parameters.add("증상2", "난청");
+    public void blocking() throws InterruptedException {
 
         final RestTemplate restTemplate = new RestTemplate();
         HttpEntity httpEntity = new HttpEntity(parameters,parameters);
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-
         final ResponseEntity<String> response =
                 restTemplate.exchange(URL, HttpMethod.POST, httpEntity, String.class);
+//        Thread.sleep(3000);
+//        restTemplate.postForObject(URL, httpEntity, String.class);
 //        assertThat(response.getBody()).contains("success");
+//        response.getStatusCode().is2xxSuccessful();
         stopWatch.stop();
 //
-        System.out.println(" 총 시간 : " + stopWatch.getTotalTimeSeconds());
+        System.out.println(" restemplate 총 시간 : " + stopWatch.getTotalTimeSeconds());
+    }
+
+    @Test
+    public void nonblocking() throws InterruptedException {
+
+        final StopWatch stopWatch = new StopWatch();
+
+        stopWatch.start();
+        webTestClient.post().uri(URL)
+                .body(BodyInserters.fromFormData(parameters))
+                .exchange();
+//                .expectStatus().isOk();
+//        Thread.sleep(3000);
+////
+//        webTestClient.post().uri(URL)
+//                .body(BodyInserters.fromFormData(parameters));
+
+
+
+        stopWatch.stop();
+        System.out.println(" webclient 총 시간 : " + stopWatch.getTotalTimeSeconds());
+
     }
 }
