@@ -1,5 +1,6 @@
 package com.example.demo.config.security;
 
+import com.example.demo.config.security.filter.CustomAuthenticationFilter;
 import com.example.demo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
@@ -54,17 +56,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/*").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .and()//로그인
+                // LINE:: 토큰을 활용하면 세션이 필요 없으므로 STATELESS로 설정하여 Session을 사용하지 않는다.
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .and()
                 .formLogin()
                 .loginPage("/member/login") // 로그인 페이지
-                .defaultSuccessUrl("/").permitAll() // 성공시 메인페이지
+                .successForwardUrl("/")
                 .and() // 로그아웃 설정
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃
-                .logoutSuccessUrl("/") // 성공시 메인페이지
-                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/") // 성공시 메인 페이지
+//                .invalidateHttpSession(true)
                 .and()
                 //403 예외처리 핸들링 권한거부
-                .exceptionHandling().accessDeniedPage("/member/denied");
+                .exceptionHandling().accessDeniedPage("/member/denied")
+                .and()
+                .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     /**
@@ -72,8 +79,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @param auth
      * @throws Exception
      */
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
+//    @Override
+//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
+//    }
+    /**
+     * Bean :: Bcrypt 암호화
+     * @return
+     */
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    @Bean
+    public CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
+        customAuthenticationFilter.setFilterProcessesUrl("/api/member/login");
+        customAuthenticationFilter.setAuthenticationSuccessHandler(customLoginSuccessHandler());
+        customAuthenticationFilter.afterPropertiesSet();
+        return customAuthenticationFilter;
+    }
+
+    @Bean
+    public CustomLoginSuccessHandler customLoginSuccessHandler() {
+        return new CustomLoginSuccessHandler();
+    }
+
+    @Bean
+    public CustomAuthenticationProvider customAuthenticationProvider() {
+        return new CustomAuthenticationProvider(bCryptPasswordEncoder());
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
+        authenticationManagerBuilder.authenticationProvider(customAuthenticationProvider());
+    }
+
 }
