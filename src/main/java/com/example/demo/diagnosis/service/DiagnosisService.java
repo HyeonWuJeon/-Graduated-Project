@@ -4,21 +4,22 @@ import com.example.demo.diagnosis.domain.Air;
 import com.example.demo.diagnosis.domain.Corna;
 import com.example.demo.diagnosis.domain.Diagnosis;
 import com.example.demo.diagnosis.domain.Macak;
+import com.example.demo.diagnosis.dto.DiagnosisDto;
+import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
 import com.example.demo.diagnosis.repository.AirRepository;
 import com.example.demo.diagnosis.repository.CornaRepository;
 import com.example.demo.diagnosis.repository.DiagnosisRepository;
 import com.example.demo.diagnosis.repository.MacakRepository;
-import com.example.demo.diagnosis.dto.DiagnosisDto;
-import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
 import com.example.demo.member.domain.Member;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.crypto.Mac;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,10 @@ public class DiagnosisService {
     private final CornaRepository cornaRepository;
     private final AirRepository airRepository;
 
+    @PersistenceContext
+    EntityManager em;
+
+
     @Transactional
     public void DiagnosisSetting(String data, String cor, String ma, String ar, String dog, Member member) {
         int dataLen = data.length();
@@ -39,17 +44,16 @@ public class DiagnosisService {
 //        Diagnosis re = new Diagnosis();
 
 
-
         //switch case문 적용.
 //        switch (name) {
 //            // 코로나 바이러스
 //            case "코로나 바이러스":
-                diagnosisRepository.save(Corna.builder()
-                    .percent(cor).member(member).dog(dog).build());
-                diagnosisRepository.save(Macak.builder()
-                    .percent(ma).member(member).dog(dog).build());
-                diagnosisRepository.save(Air.builder()
-                        .percent(ar).member(member).dog(dog).build());
+        diagnosisRepository.save(Corna.builder()
+                .percent(cor).member(member).dog(dog).build());
+        diagnosisRepository.save(Macak.builder()
+                .percent(ma).member(member).dog(dog).build());
+        diagnosisRepository.save(Air.builder()
+                .percent(ar).member(member).dog(dog).build());
 //
 //            // 마카다미아 바이러스
 //            case "마카디마아너트 중독증": diagnosisRepository.save(Macak.builder()
@@ -74,7 +78,7 @@ public class DiagnosisService {
 //                        .percent(ma)
 //                        .build());
 //                break;
-        }
+    }
 
 
 //        re.setAir(air);
@@ -103,7 +107,12 @@ public class DiagnosisService {
 
     @Transactional
     public List<DiagnosisNameCountDto> findNameCount() {
-        List<DiagnosisNameCountDto> diagName = diagnosisRepository.countByName();
+        JpaResultMapper result = new JpaResultMapper();
+        String sql = "SELECT disease_type, COUNT(disease_type) as cnt FROM Diagnosis_table GROUP BY disease_type";
+        Query query =  em.createNativeQuery(sql);
+        List<DiagnosisNameCountDto> diagName = result.list(query, DiagnosisNameCountDto.class);
+
+//        List<Diagnosis> diagName = diagnosisRepository.countByName();
         return diagName;
     }
 

@@ -1,15 +1,18 @@
 package com.example.demo.diagnosis.dto;
 
-import lombok.*;
+import lombok.Getter;
+
+import java.math.BigInteger;
+
 
 @Getter
 public class DiagnosisNameCountDto {
 
-    private String name;
-    private Long count;
+    private String diseaseTypeName;
+    private BigInteger diseaseTypeCount;
 
-    public DiagnosisNameCountDto(String name, Long count) {
-        this.name = name;
-        this.count = count;
+    public DiagnosisNameCountDto(String diseaseTypeName, BigInteger diseaseTypeCount) {
+        this.diseaseTypeName = diseaseTypeName;
+        this.diseaseTypeCount = diseaseTypeCount;
     }
 }

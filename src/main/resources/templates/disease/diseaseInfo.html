@@ -13,8 +13,8 @@
                     <table id="diseaseTable">
                         <tbody id="diseaseList">
                             <tr th:each="digName : ${diagName}" class="digNameTR" hidden="true">
-                                <td th:text="${digName.name}"></td>
-                                <td th:text="${digName.count}"></td>
+                                <td th:text="${digName.diseaseTypeName}"></td>
+                                <td th:text="${digName.diseaseTypeCount}"></td>
                             </tr>
 
                             <tr th:each="dCount : ${dogCount}" class="dCountTR" hidden="ture">

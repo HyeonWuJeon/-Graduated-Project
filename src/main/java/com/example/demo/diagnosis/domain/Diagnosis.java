@@ -1,5 +1,6 @@
 package com.example.demo.diagnosis.domain;
 
+import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
 import com.example.demo.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,6 +9,16 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
+
+@SqlResultSetMapping(
+        name="ProductOrderedMemberMapping",
+        classes = @ConstructorResult(
+                targetClass = DiagnosisNameCountDto.class,
+                columns = {
+                        @ColumnResult(name="diseaseTypeName", type = String.class),
+                        @ColumnResult(name="diseaseTypeCount", type = Long.class),
+                })
+)
 
 @Getter
 @Entity
@@ -27,6 +38,12 @@ public class Diagnosis {
 
 //    private String name; // 진단 질병명
     private String dog;
+
+//    @Transient
+//    private String diseaseTypeName;
+//
+//    @Transient
+//    private String diseaseTypeCount;
 //    private String type;
 //
 //    private String percent;

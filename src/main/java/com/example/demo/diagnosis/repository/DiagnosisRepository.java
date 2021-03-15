@@ -23,7 +23,7 @@ public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
     기존 쿼리
      */
 //    @Query("SELECT " +
-//            "   new com.example.demo.diagnosis.dto.DiagnosisNameCountDto(diag.name, COUNT(diag.type(name)))" +
+//            "   new com.example.demo.diagnosis.dto.DiagnosisNameCountDto(diag.c, COUNT(diag.type(name)))" +
 //            "FROM " +
 //            "   Diagnosis diag " +
 //            "GROUP BY" +
@@ -33,16 +33,16 @@ public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
     /**
      * 변경쿼리
      * @return
-     */
+//     */
 //    @Query("SELECT " +
-//            "   new com.example.demo.diagnosis.dto.DiagnosisNameCountDto(diag.dog, COUNT(diag.dog))" +
+//            "   new com.example.demo.diagnosis.dto.DiagnosisNameCountDto(diag.disease_type, COUNT(diag.dog))" +
 //            "FROM " +
-//            "   Diagnosis diag " +
+//            " Diagnosis diag " +
 //            "GROUP BY" +
 //            "   diag.dog")
 //    List<DiagnosisNameCountDto> countByName();
-
-    @Query(value = "SELECT COUNT(disease_type) as cnt FROM Diagnosis_table GROUP BY dog", nativeQuery = true)
-    List<DiagnosisNameCountDto>  countByName();
+//
+    @Query(value = "SELECT disease_type as diseaseTypeName, COUNT(disease_type) as diseaseTypeCount FROM Diagnosis_table GROUP BY disease_type", nativeQuery = true)
+    List<Diagnosis> countByName();
 
 }
