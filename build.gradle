@@ -1,12 +1,21 @@
+buildscript{
+//	dependencies{
+//		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+//	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.3.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'war'
 }
+
+//apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -21,7 +30,9 @@ repositories {
 
 
 dependencies {
+//	// jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-devtools'
@@ -41,15 +52,23 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
 
+	compile 'org.springframework.boot:spring-boot-starter-jdbc'
 
+	compile 'org.qlrm:qlrm:2.0.2';
 
 	compile('org.springframework.session:spring-session-jdbc') // 세션 사용
 	implementation 'org.springframework.session:spring-session-core'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 
+	// 시큐리티
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	compile('org.springframework.boot:spring-boot-starter-oauth2-client')
-	compile("org.mariadb.jdbc:mariadb-java-client")
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	//security test @WithMockUser
+	testCompile('org.springframework.security:spring-security-test')
+//
+//	// 마리아 db
+//	compile("org.mariadb.jdbc:mariadb-java-client")
 
 //	json handling
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
@@ -59,4 +78,29 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-validation')
 
 
+	//query dsl
+//	implementation 'com.querydsl:querydsl-jpa'
+//	implementation 'com.querydsl:querydsl-apt'
 }
+
+//querydsl 추가
+//def querydslDir = 'src/main/generated'
+//def querydslDir = "$buildDir/generated/querydsl"
+//querydsl {
+//	library = "com.querydsl:querydsl-apt"
+//	jpa = true
+//	querydslSourcesDir = querydslDir
+//}
+//sourceSets {
+//	main {
+//		java {
+//			srcDirs = ['src/main/java', querydslDir]
+//		}
+//	}
+//}
+//compileQuerydsl{
+//	options.annotationProcessorPath = configurations.querydsl
+//}
+//configurations {
+//	querydsl.extendsFrom compileClasspath
+//}
