@@ -2,6 +2,7 @@ package com.example.demo.member.controller;
 
 import com.example.demo.config.aop.LoginUser;
 import com.example.demo.hospital.domain.Hospital;
+import com.example.demo.member.dto.MemberDto;
 import com.example.demo.member.dto.MemberSaveRequestDto;
 import com.example.demo.member.dto.MemberUpdatePwd;
 import com.example.demo.member.dto.MemberUpdateRequestDto;
@@ -26,13 +27,13 @@ public class MemberApiController  {
 
     // 회원이 직접 정보를 수정하는 API
     @PutMapping("/member/settings/{id}")
-    public Long updateForm(@PathVariable Long id, @RequestBody MemberUpdateRequestDto requestDto) {
+    public Long updateForm(@PathVariable Long id, @RequestBody MemberDto.updateInfo requestDto) {
         return memberService.update(id, requestDto);
     }
 
     // 회원 패스워드 변경 전용 API
     @PutMapping("/member/settingsPwd/{id}")
-    public Long updatePwd(@PathVariable Long id, @RequestBody MemberUpdatePwd requestDto) {
+    public Long updatePwd(@PathVariable Long id, @RequestBody MemberDto.updatePwd requestDto) {
         if(!requestDto.getPassword().equals(requestDto.getPassword2())) {
             throw new IllegalStateException("패스워드 확인 바랍니다.");
         }
@@ -55,7 +56,7 @@ public class MemberApiController  {
 
     // 관리자가 회원정보를 수정하는 API
     @PutMapping("/admin/member/settings/{id}")
-    public Long updateMember(@PathVariable Long id, @RequestBody MemberUpdateRequestDto requestDto) {
+    public Long updateMember(@PathVariable Long id, @RequestBody MemberDto.updateInfo requestDto) {
         return memberService.updateMember(id, requestDto);
     }
 
@@ -74,7 +75,7 @@ public class MemberApiController  {
      * @return
      */
     @PostMapping(value = "/member/signup")
-    public ResponseEntity createMemberApi( MemberSaveRequestDto form) {
+    public ResponseEntity createMemberApi(MemberDto.Request form) {
         return memberService.SignUp(form);
     }
 

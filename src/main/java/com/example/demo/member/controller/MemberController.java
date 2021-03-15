@@ -3,7 +3,7 @@ package com.example.demo.member.controller;
 import com.example.demo.config.aop.LogExecutionTime;
 import com.example.demo.config.aop.LoginFindMember;
 import com.example.demo.member.domain.Member;
-import com.example.demo.member.dto.MemberResponseDto;
+import com.example.demo.member.dto.MemberDto;
 import com.example.demo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,14 +50,13 @@ public class MemberController {
         if(member != null) {
             model.addAttribute("member", member);
         }
-
         return "member/memberAuth/myPage";
     }
 
     // 회원 정보수정
     @GetMapping("/member/settings/{id}")
     public String updateMember(@PathVariable Long id, Model model) {
-        MemberResponseDto dto = memberService.findById(id);
+        MemberDto.Response dto = memberService.findById(id);
 
         model.addAttribute("member", dto);
 
@@ -68,7 +67,7 @@ public class MemberController {
     @GetMapping(value = "/admin/members")
     @LogExecutionTime
     public String readAllMemberAdmin(Model model) {
-        List<MemberResponseDto> members = memberService.findAllDesc();
+        List<MemberDto.Response> members = memberService.findAllDesc();
         model.addAttribute("members", members);
 
         return "admin/memberControl/memberList";
@@ -77,7 +76,7 @@ public class MemberController {
     // 관리자, 회원 정보수정
     @GetMapping("/admin/member/settings/{id}")
     public String updateMemberAdmin(@PathVariable Long id, Model model){
-        MemberResponseDto dto = memberService.findById(id);
+        MemberDto.Response dto = memberService.findById(id);
 
         model.addAttribute("member", dto);
 
@@ -97,12 +96,8 @@ public class MemberController {
     // 관리자 정보수정
     @GetMapping("/admin/settings/{id}")
     public String updateAdmin(@PathVariable Long id, Model model) {
-        MemberResponseDto adminDto = memberService.findById(id);
+        MemberDto.Response adminDto = memberService.findById(id);
         model.addAttribute("admin", adminDto);
-
         return "admin/adminAuth/admin_settings";
     }
-
-
-
 }

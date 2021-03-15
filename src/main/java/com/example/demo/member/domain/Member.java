@@ -61,6 +61,8 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;          // ADMIN : 관리자 / GUEST : 사용자 / VET : 수의사
 
+    @Transient
+    private boolean enabled;
 
     /**
      * Business Logic : 회원가입
@@ -73,7 +75,7 @@ public class Member extends BaseTimeEntity {
      * @param phone
      */
     @Builder
-    public Member(String name, Address address, Role role, String email , String password, String birth, String phone) {
+    public Member(String name, Address address, Role role, String email , String password, String birth, String phone, boolean enabled) {
         this.name = name;
         this.address = address;
         this.role = role;
@@ -81,6 +83,7 @@ public class Member extends BaseTimeEntity {
         this.password = password;
         this.birth = birth;
         this.phone = phone;
+        this.enabled = enabled;
     }
 
 
@@ -156,6 +159,7 @@ public class Member extends BaseTimeEntity {
      * @return
      */
     public String getRoleKey() {
+
         return this.role.getValue();
     }
 

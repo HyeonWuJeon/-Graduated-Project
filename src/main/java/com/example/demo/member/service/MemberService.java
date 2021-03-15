@@ -7,10 +7,7 @@ import com.example.demo.diagnosis.repository.DiagnosisRepository;
 import com.example.demo.diagnosis.service.DiagnosisService;
 import com.example.demo.hospital.service.HospitalService;
 import com.example.demo.member.domain.Member;
-import com.example.demo.member.dto.MemberResponseDto;
-import com.example.demo.member.dto.MemberSaveRequestDto;
-import com.example.demo.member.dto.MemberUpdatePwd;
-import com.example.demo.member.dto.MemberUpdateRequestDto;
+import com.example.demo.member.dto.*;
 import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.reserve.service.ReserveService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +64,7 @@ public  class MemberService implements UserDetailsService {
      * @param form
      * @return
      */
-    public ResponseEntity SignUp(MemberSaveRequestDto form) {
+    public ResponseEntity SignUp(MemberDto.Request form) {
         //주소 지정
         form.setAddress(form.getCity(), form.getZipcode(), form.getStreet());
 
@@ -106,16 +104,23 @@ public  class MemberService implements UserDetailsService {
      * @return
      * @throws UsernameNotFoundException
      */
+//    @Override
+//    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+//        Member userEntityWrapper = memberRepository.findByEmail(userEmail)
+//                .orElseThrow(() -> new UsernameNotFoundException("권한 가지고 있는 회원 없음")); // 조회된 사용자가 없는 경우
+//
+//        GrantedAuthority authority = new SimpleGrantedAuthority(userEntityWrapper.getRole().getValue());
+//        UserDetails userDetails =  new User(userEntityWrapper.getEmail(),
+//                userEntityWrapper.getPassword(), Arrays.asList(authority));
+//
+//        return userDetails; // 조회된 유저정보 반환
+//    }
+
     @Override
-    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        Member userEntityWrapper = memberRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("권한 가지고 있는 회원 없음")); // 조회된 사용자가 없는 경우
-
-        GrantedAuthority authority = new SimpleGrantedAuthority(userEntityWrapper.getRole().getValue());
-        UserDetails userDetails =  new User(userEntityWrapper.getEmail(),
-                userEntityWrapper.getPassword(), Arrays.asList(authority));
-
-        return userDetails; // 조회된 유저정보 반환
+    public MemberDto.Response loadUserByUsername(String userEmail) throws UsernameNotFoundException{
+        return  memberRepository.findByEmail(userEmail).map(u ->
+                new MemberDto.Response(u, Collections.singleton(new SimpleGrantedAuthority(u.getRole().getValue())))).orElseThrow(()
+                -> new UsernameNotFoundException(userEmail));
     }
 
     /**
@@ -125,7 +130,7 @@ public  class MemberService implements UserDetailsService {
      * @return
      */
     @Transactional
-    public Long update(Long id, MemberUpdateRequestDto requestDto) {
+    public Long update(Long id, MemberDto.updateInfo requestDto) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다. id=" + id));
         member.update(requestDto.getCity(), requestDto.getStreet(), requestDto.getZipcode(), requestDto.getPhone());
@@ -138,7 +143,7 @@ public  class MemberService implements UserDetailsService {
      * @param requestDto
      * @return
      */
-    public Long updatePwd(Long id, MemberUpdatePwd requestDto) {
+    public Long updatePwd(Long id, MemberDto.updatePwd requestDto) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다. id=" + id));
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -155,7 +160,7 @@ public  class MemberService implements UserDetailsService {
      * @param requestDto
      * @return
      */
-    public Long updateMember(Long id, MemberUpdateRequestDto requestDto) {
+    public Long updateMember(Long id, MemberDto.updateInfo requestDto) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다. id=" + id));
 
@@ -170,11 +175,11 @@ public  class MemberService implements UserDetailsService {
      * @return
      */
     @Transactional(readOnly = true)
-    public MemberResponseDto findById(Long id) {
+    public MemberDto.Response findById(Long id) {
         Member entity = memberRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException(("해당 회원/수의사/관리자가 없습니다. id=" + id)));
 
-        return new MemberResponseDto(entity);
+        return new MemberDto.Response(entity);
     }
 
     /**
@@ -201,9 +206,9 @@ public  class MemberService implements UserDetailsService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<MemberResponseDto> findAllDesc() {
+    public List<MemberDto.Response> findAllDesc() {
         return memberRepository.findAllDesc().stream()
-                .map(MemberResponseDto::new)
+                .map(MemberDto.Response::new)
                 .collect(Collectors.toList());
     }
 }
