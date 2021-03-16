@@ -1,7 +1,7 @@
 buildscript{
-//	dependencies{
-//		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
-//	}
+	dependencies{
+		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+	}
 }
 
 plugins {
@@ -11,7 +11,7 @@ plugins {
 	id 'war'
 }
 
-//apply plugin: "com.ewerk.gradle.plugins.querydsl"
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -79,28 +79,28 @@ dependencies {
 
 
 	//query dsl
-//	implementation 'com.querydsl:querydsl-jpa'
-//	implementation 'com.querydsl:querydsl-apt'
+	implementation 'com.querydsl:querydsl-jpa'
+	implementation 'com.querydsl:querydsl-apt'
 }
 
 //querydsl 추가
-//def querydslDir = 'src/main/generated'
+def querydslDir = 'src/main/generated'
 //def querydslDir = "$buildDir/generated/querydsl"
-//querydsl {
-//	library = "com.querydsl:querydsl-apt"
-//	jpa = true
-//	querydslSourcesDir = querydslDir
-//}
-//sourceSets {
-//	main {
-//		java {
-//			srcDirs = ['src/main/java', querydslDir]
-//		}
-//	}
-//}
-//compileQuerydsl{
-//	options.annotationProcessorPath = configurations.querydsl
-//}
-//configurations {
-//	querydsl.extendsFrom compileClasspath
-//}
+querydsl {
+	library = "com.querydsl:querydsl-apt"
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', querydslDir]
+		}
+	}
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+	querydsl.extendsFrom compileClasspath
+}

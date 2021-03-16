@@ -3,6 +3,7 @@ package com.example.demo.APITest;
 import com.example.demo.config.security.Role;
 import com.example.demo.member.domain.Address;
 import com.example.demo.member.domain.Member;
+import com.example.demo.member.dto.MemberDto;
 import com.example.demo.member.dto.MemberSaveRequestDto;
 import com.example.demo.member.dto.MemberUpdateRequestDto;
 import com.example.demo.member.repository.MemberRepository;
@@ -35,7 +36,6 @@ import static org.junit.Assert.fail;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //내장톰켓 구동
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK) //내장톰켓 구동 안함 디폴트값
 //@WebMvcTest
-
 public class MemberServiceApiTest {
 
     /**
@@ -102,7 +102,7 @@ public class MemberServiceApiTest {
     @Test(expected = AssertionError.class)// catch 문구를 볼필요가 없을경우.
     public void 중복회원가입() throws Exception {
         //given
-        MemberSaveRequestDto member = new MemberSaveRequestDto();
+        MemberDto.Request member = new MemberDto.Request();
         Address address = new Address("경기도", "광명시", "어딘가");
         //given + when
         //when
@@ -122,7 +122,7 @@ public class MemberServiceApiTest {
     @Test(expected = UnexpectedRollbackException.class)
     public void 트랜잭션정책() throws Exception {
         //given
-        MemberSaveRequestDto member = new MemberSaveRequestDto();
+        MemberDto.Request member = new MemberDto.Request();
         Address address = new Address("경기도", "광명시", "어딘가");
 
         //when
@@ -149,7 +149,7 @@ public class MemberServiceApiTest {
     public void 회원수정() throws Exception {
         //given
         Address address = new Address("kk", "kfc", "def");
-        MemberUpdateRequestDto requestDto = MemberUpdateRequestDto.builder()
+        MemberDto.updateInfo requestDto = MemberDto.updateInfo.builder()
                 .city(address.getCity())
                 .zipcode(address.getZipcode())
                 .street(address.getStreet())
@@ -161,7 +161,7 @@ public class MemberServiceApiTest {
 
         String url = "http://localhost:" + port + "/api/member/settings/"+m.getId();
 
-        HttpEntity<MemberUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+        HttpEntity<MemberDto.updateInfo> requestEntity = new HttpEntity<>(requestDto);
 
         String result = restTemplate.getForObject("/",String.class); //get 메소드 리턴값 확인
 

@@ -39,7 +39,7 @@ public class DogServiceApiTest {
     @LocalServerPort
     int port;
     @Autowired
-    private DogRepository dogRepository; //
+    private DogRepository dogRepository;
     @Autowired
     private DogService dogService;
 

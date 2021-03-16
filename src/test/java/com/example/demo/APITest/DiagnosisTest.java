@@ -52,20 +52,20 @@ public class DiagnosisTest {
 //                .role(Role.GUEST)
 //                .build());
 //    }
-    @Test
-    public void hello() throws Exception {
-        Member member = em.find(Member.class, 1L);
-        diagnosisService.DiagnosisSetting("코로나 바이러스", "30","60","10", "다은이",member);
+//    @Test
+//    public void hello() throws Exception {
+//        Member member = em.find(Member.class, 1L);
+//        diagnosisService.DiagnosisSetting("코로나 바이러스", "30","60","10", "다은이",member);
+//
+//    }
 
-    }
-
-    @Test
-    public void countUnitTest() throws Exception{
-
-        List<DiagnosisNameCountDto> diag = new ArrayList<>();
-//        DiagnosisNameCountDto a = DiagnosisNameCountDto("name")
-        List<DiagnosisNameCountDto> diags = diagnosisRepository.countByName();
-
-        System.out.println("diags.toString() = " + diags.toString());
-    }
+//    @Test
+//    public void countUnitTest() throws Exception{
+//
+//        List<DiagnosisNameCountDto> diag = new ArrayList<>();
+////        DiagnosisNameCountDto a = DiagnosisNameCountDto("name")
+//        List<DiagnosisNameCountDto> diags = diagnosisRepository.countByName();
+//
+//        System.out.println("diags.toString() = " + diags.toString());
+//    }
 }
