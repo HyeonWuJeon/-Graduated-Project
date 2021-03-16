@@ -21,15 +21,16 @@ public class Dog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="member_id")
     private Member member;
-
     private String name;
     private String age;
     private String gender;
     private String birth;
     private String type;
+    @Column(name="symptom_cause")
+    private String symptomCause;
 
     @Builder
-    public Dog(Long id, Member member, String name, String age, String gender, String birth, String type) {
+    public Dog(Long id, Member member, String name, String age, String gender, String birth, String type, String symptomCause) {
         this.id = id;
         this.member=member;
         this.name = name;
@@ -37,8 +38,13 @@ public class Dog {
         this.gender=gender;
         this.birth=birth;
         this.type=type;
+        this.symptomCause = symptomCause;
     }
 
+    public Dog symptomCauseUpdate(String cause){
+        this.symptomCause =cause;
+        return this;
+    }
 
 
     public Dog update(String age, String gender, String name) {

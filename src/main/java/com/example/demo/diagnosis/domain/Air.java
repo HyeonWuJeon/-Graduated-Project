@@ -1,5 +1,6 @@
 package com.example.demo.diagnosis.domain;
 
+import com.example.demo.dog.domain.Dog;
 import com.example.demo.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +27,7 @@ public class Air extends Diagnosis{
     }
 
     @Builder
-    public Air(String percent, String dog, Member member) {
+    public Air(String percent, Dog dog, Member member) {
         super(dog, member);
         this.percent = percent;
     }

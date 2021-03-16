@@ -15,12 +15,14 @@ public class DogResponseDto {
     private String gender;
     private String birth;
     private String type;
+//    private String symptomCause;
 
 
     public DogResponseDto(Dog entity) {
         this.id = entity.getId();
         this.member = entity.getMember();
         this.name = entity.getName();
+//        this.symptomCause = entity.getSymptomCause();
         this.age = entity.getAge();
         this.gender = entity.getGender();
         this.birth = entity.getBirth();

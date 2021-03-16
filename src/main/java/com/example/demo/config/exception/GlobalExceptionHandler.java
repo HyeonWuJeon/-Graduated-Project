@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.config.exception;
 
 
 import com.example.demo.config.exception.ExceptionResponse;

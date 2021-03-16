@@ -8,6 +8,7 @@ import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
 import com.example.demo.diagnosis.service.DiagnosisService;
 import com.example.demo.disease.dto.DiseaseResponseDto;
 import com.example.demo.disease.service.DiseaseService;
+import com.example.demo.dog.domain.Dog;
 import com.example.demo.dog.dto.DogResponseDto;
 import com.example.demo.dog.dto.DogTypeCountDto;
 import com.example.demo.dog.service.DogService;
@@ -25,10 +26,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -39,6 +38,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -59,11 +60,9 @@ public class DiseaseController {
     @GetMapping("/admin/diseases")
     @LogExecutionTime
     public String DiseaseInfoPage(Model model) {
-//        List<DiseaseResponseDto> diseasesAll = diseaseService.findAllDesc();
         List<DiagnosisNameCountDto> diagnosisNames = diagnosisService.findNameCount();
         List<DogTypeCountDto> dogCounts = dogService.findDogCount();
 
-//        model.addAttribute("dis", diseasesAll);
         model.addAttribute("diagName", diagnosisNames);
         model.addAttribute("symptomForm", new SymptomForm());
         model.addAttribute("dogCount", dogCounts);
@@ -89,7 +88,10 @@ public class DiseaseController {
     @PostMapping("/api/disease/form")
     @LogExecutionTime
     public String callAPI_put(DiseaseForm form, Model model, @LoginFindMember Member member) throws JsonProcessingException {
+
         RestTemplate restTemplate = new RestTemplate();
+
+        WebClient webClient = WebClient.create();
 
 //        String url = "http://15.165.169.119:5000/test";
         String url = "http://localhost:80/test";
@@ -97,12 +99,20 @@ public class DiseaseController {
 
 
         MultiValueMap<String,String> parameters = new LinkedMultiValueMap<String,String>();
-
         for(int i = 0; i < form.getSymptom().size(); i++) {
             parameters.add("증상" + i, form.getSymptom().get(i));
         }
 
-        // Flask에 증상 값을 POST 매핑으로 던져준다.
+//        webClient.mutate()
+//                .baseUrl("http://localhost:80/")
+//                .build().post()
+//                .uri("/test")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON)
+//                .bodyValue(parameters)
+//                .retrieve()
+//                .bodyToMono(String.class);
+
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(url,parameters,String.class);
 
         HashMap<String, Object> result = new HashMap<String, Object>();
@@ -115,9 +125,11 @@ public class DiseaseController {
             HttpHeaders header = new HttpHeaders();
             HttpEntity<?> entity = new HttpEntity<>(header); // 값 받기
 
-//            String url2 = "http://15.165.169.119:5000/test";
-            String url2 = "http://localhost:80/test";
+//            String url2 = "http://15.165.169.119:5000/test"; ec2
+            String url2 = "http://localhost:80/test"; // local
+
             ResponseEntity<Object> resultMap = restTemplate.exchange(url2, HttpMethod.POST,entity, Object.class);
+
 
             result.put("Statuscode", resultMap.getStatusCodeValue());
             result.put("header", resultMap.getHeaders());
@@ -137,12 +149,10 @@ public class DiseaseController {
 
         Object obj = parser.parse(jsonInString);
         JsonObject jsonObj = (JsonObject) obj;
-        JsonElement k = jsonObj.get("코로나 바이러스");
-
 
         // setting
         diagnosisService.DiagnosisSetting(jsonObj.get("data").toString(), jsonObj.get("코로나 바이러스").toString(),
-                jsonObj.get("마카다미아너트 중독증").toString(), jsonObj.get("기관지 확장증").toString(), form.getChoice(), member);
+                jsonObj.get("마카다미아너트 중독증").toString(), jsonObj.get("기관지 확장증").toString(), form.getId(), member);
 
         List<DiseaseResponseDto> diseaseAll = diseaseService.findAllDesc();
         List<HospitalResponseDto> hospitalList = hospitalService.findAllDesc();
@@ -165,9 +175,8 @@ public class DiseaseController {
     @GetMapping(value = "/member/chart/record")
     @LogExecutionTime
     public String list(Model model, @LoginFindMember Member member) {
-        List<DiagnosisDto> diagnosis = diagnosisService.findAllDesc(member);
+        List<Diagnosis> diagnosis = diagnosisService.findAllDesc(member);
         model.addAttribute("dias", diagnosis);
-
         return "diagnosis/diagnosisList";
     }
 

@@ -8,11 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DogRepository extends JpaRepository<Dog, Long> {
 
     @Query("SELECT d FROM Dog d WHERE d.member = :member")
     List<Dog> findAllDesc(Member member);
+
 
     @Query("SELECT " +
             "   new com.example.demo.dog.dto.DogTypeCountDto(d.gender, d.type, COUNT(d))" +

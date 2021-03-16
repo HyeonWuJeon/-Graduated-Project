@@ -23,8 +23,6 @@ public class Reserve  {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String dog;
-
     @Column(name = "visit_date", nullable = false)
     private String date;
 
@@ -40,7 +38,7 @@ public class Reserve  {
     private String address;
 
     @Builder
-    public Reserve(Long id, Member member, String date, String description, String name, String address , String tel, String dog, Hospital hospital) {
+    public Reserve(Long id, Member member, String date, String description, String name, String address , String tel, Hospital hospital) {
         this.id = id;
         this.member = member;
         this.date = date;
@@ -48,7 +46,6 @@ public class Reserve  {
         this.name = name;
         this.address = address;
         this.tel = tel;
-        this.dog = dog;
         this.hospital = hospital;
     }
 

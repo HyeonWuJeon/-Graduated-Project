@@ -7,27 +7,30 @@ import com.example.demo.diagnosis.repository.DiagnosisRepository;
 import com.example.demo.diagnosis.service.DiagnosisService;
 import com.example.demo.hospital.service.HospitalService;
 import com.example.demo.member.domain.Member;
+import com.example.demo.member.domain.QMember;
 import com.example.demo.member.dto.*;
 import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.reserve.service.ReserveService;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.netty.util.internal.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +47,9 @@ public  class MemberService implements UserDetailsService {
     private final ReserveService reserveService;
 
     private final HospitalService hospitalService;
+
+    @PersistenceContext
+    EntityManager em;
 
 
 
@@ -194,21 +200,49 @@ public  class MemberService implements UserDetailsService {
             memberRepository.delete(member);
         } else if (member.getHospital() == null) { // 수의사인데 병원이 없거나, 일반 사용자일경우
             reserveService.delete_member(member);
-            List<Diagnosis> diagnosis = diagnosisRepository.findAllDesc(member);
+            List<Diagnosis> diagnosis = diagnosisRepository.findAllDelete(member);
             diagnosisService.delete(diagnosis);
             memberRepository.delete(member);
         }
 
     }
-
     /**
      * FUNCTION :: 사용자정보 전체조회
      * @return
      */
+
     @Transactional(readOnly = true)
-    public List<MemberDto.Response> findAllDesc() {
-        return memberRepository.findAllDesc().stream()
-                .map(MemberDto.Response::new)
-                .collect(Collectors.toList());
+    public List<Member> findAllDesc(MemberDto.MemberSearch m){
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
+        // 이메일, role
+        QMember member = QMember.member;
+        return queryFactory.select(member)
+                    .from(member)
+                    .where(nameLike(m.getEmail()),roleStatusEq(m.getRole()))
+                    .limit(1000)
+                    .fetch();
     }
+
+    private BooleanExpression roleStatusEq(Role role) {
+        if(role == null){
+            return null;
+        }
+        return QMember.member.role.eq(role);
+
+    }
+
+    private BooleanExpression nameLike(String email){
+        if(!StringUtils.hasText(email)){
+            return null;
+        }
+        return QMember.member.email.eq(email);
+    }
+
+//    @Transactional(readOnly = true)
+//    public List<MemberDto.Response> findAllDesc() {
+//        return memberRepository.findAllDesc().stream()
+//                .map(MemberDto.Response::new)
+//                .collect(Collectors.toList());
+//    }
 }

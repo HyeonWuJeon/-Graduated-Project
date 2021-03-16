@@ -1,5 +1,6 @@
 package com.example.demo.disease.controller;
 
+import com.example.demo.dog.domain.Dog;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 @Setter
 public class DiseaseForm {
 
-    private String choice;
+//    private String choice;
+    private Long id;
     private ArrayList<String> symptom; // 증상을 입력받을 배열
 }

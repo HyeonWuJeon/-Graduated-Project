@@ -1,6 +1,7 @@
 package com.example.demo.diagnosis.domain;
 
 
+import com.example.demo.dog.domain.Dog;
 import com.example.demo.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Macak extends Diagnosis{
         macak.setPercent(percent);
     }
     @Builder
-    public Macak(String percent, String dog, Member member) {
+    public Macak(String percent, Dog dog, Member member) {
         super(dog, member);
         this.percent =percent;
     }

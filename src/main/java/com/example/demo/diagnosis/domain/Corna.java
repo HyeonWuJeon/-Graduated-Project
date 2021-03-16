@@ -1,6 +1,7 @@
 package com.example.demo.diagnosis.domain;
 
 
+import com.example.demo.dog.domain.Dog;
 import com.example.demo.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Corna extends Diagnosis {
         super();
     }
     @Builder
-    public Corna(String percent, Member member, String dog)
+    public Corna(String percent, Member member, Dog dog)
     {
         super(dog, member);
         this.percent = percent;

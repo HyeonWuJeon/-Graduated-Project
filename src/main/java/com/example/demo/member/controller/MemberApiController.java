@@ -89,5 +89,4 @@ public class MemberApiController  {
         memberService.validateDuplicateMember(user_email);
         return new ResponseEntity(HttpStatus.OK);
     }
-
 }

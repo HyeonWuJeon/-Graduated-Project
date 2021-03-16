@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -66,8 +67,8 @@ public class MemberController {
     // 관리자, 회원 정보 리스트
     @GetMapping(value = "/admin/members")
     @LogExecutionTime
-    public String readAllMemberAdmin(Model model) {
-        List<MemberDto.Response> members = memberService.findAllDesc();
+    public String readAllMemberAdmin(Model model, @ModelAttribute("MemberSearch") MemberDto.MemberSearch member) {
+        List<Member> members = memberService.findAllDesc(member);
         model.addAttribute("members", members);
 
         return "admin/memberControl/memberList";

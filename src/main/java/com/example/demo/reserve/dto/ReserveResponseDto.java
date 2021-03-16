@@ -26,6 +26,5 @@ public class ReserveResponseDto {
         this.name = entity.getName();
         this.address = entity.getAddress();
         this.tel = entity.getTel();
-        this.dog =entity.getDog();
     }
 }

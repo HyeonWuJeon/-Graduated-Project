@@ -220,5 +220,10 @@ public class MemberDto extends BaseTimeEntity {
 
 
     }
+    @Data
+    public static class MemberSearch {
+        private String email;
+        private Role role;
+    }
 }
 

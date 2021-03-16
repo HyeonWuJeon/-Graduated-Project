@@ -1,6 +1,7 @@
 package com.example.demo.diagnosis.domain;
 
 import com.example.demo.diagnosis.dto.DiagnosisNameCountDto;
+import com.example.demo.dog.domain.Dog;
 import com.example.demo.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,41 +26,38 @@ import static javax.persistence.FetchType.LAZY;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn(name = "disease_type")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "Diagnosis_table")
 public class Diagnosis {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="diagnosis_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-//    private String name; // 진단 질병명
-    private String dog;
+    @ManyToOne(fetch = LAZY)
+    private Dog dog;
 
-//    @Transient
-//    private String diseaseTypeName;
-//
-//    @Transient
-//    private String diseaseTypeCount;
-//    private String type;
-//
-//    private String percent;
-//
-//    @OneToOne
-//    private Corna corna;
-//    @OneToOne
-//    private Macak macak;
-//    @OneToOne
-//    private Air air;
+    @Transient
+    private String percent;
+    @Transient
+    private String disease_type;
 
+    public static Diagnosis setSymptomCause(String symptomCause){
+        Diagnosis diagnosis = new Diagnosis();
+        return  diagnosis;
 
-    public Diagnosis(String dog, Member member) {
+    }
+
+    public Diagnosis(Dog dog, Member member) {
         this.dog =dog;
         this.member = member;
-//        this.name = name;
-//        this.type = type;
     }
+//    public Diagnosis(String dog, Member member) {
+//        this.dog =dog;
+//        this.member = member;
+//    }
 }
