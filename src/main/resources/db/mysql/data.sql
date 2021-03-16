@@ -24,6 +24,9 @@ insert into hospital(hospital_address,hospital_name, hospital_tel,member_id) val
 insert into hospital(hospital_address,hospital_name, hospital_tel,member_id) values('충남 아산시 중앙로 10','주앤동물병원','041-547-0275',3);
 insert into hospital(hospital_address,hospital_name, hospital_tel,member_id) values('서울 강남구 압구정로 437','혜민동물병원','02-454-8275', 4);
 
+update member set hospital_id = 1 where member_id=2;
+update member set hospital_id = 2 where member_id=3;
+update member set hospital_id = 3 where member_id=4;
 
 
 insert into dog(age, birth,gender, name,type,member_id) values('생후 12개월 미만','2020-06-30','암컷','다은리','포메라니안',1);
