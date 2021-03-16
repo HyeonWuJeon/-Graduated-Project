@@ -48,9 +48,12 @@
                         <div id="changeBtn" class="container-login100-form-btn" style="padding-left: 30px; width: 210px;">
                             <div class="wrap-login100-form-btn" >
                                 <div class="login100-form-bgbtn"></div>
-                                <button class="login100-form-btn" type="submit" id="submitModel">
+                                <a class="login100-form-btn" th:onclick="AImodeling()">
                                     변경완료
-                                </button>
+                                </a>
+<!--                                <button class="login100-form-btn" type="submit" id="submitModel">-->
+<!--                                    변경완료-->
+<!--                                </button>-->
                             </div>
                         </div>
                     </div>
@@ -61,20 +64,42 @@
         <script src="../../../static/vendor/jquery/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
+            function AImodeling() {
+                const formData = $('#modelForm').serialize();
 
-            // form - submit delay
-            $('form').submit(function (e) {
-                let form = this;
-                // 로딩바 가져오기
-                $("#changeBtn").hide();
-                $(".loader").fadeIn();
-                e.preventDefault();
-                setTimeout(function () {
-                    form.submit();
-                    alert("등록이 완료됐습니다!");
-                    location.reload();
-                }, 5000);
-            });
+                console.log(formData);
+                $.ajax({
+                    url: "/api/AIRemodeling",
+                    type: "POST",
+                    cache: false,
+                    data: formData,
+                    success: function (data, status) {
+                        if (status == 'success') {
+                            alert("등록을 완료했습니다!")
+                            location.reload();
+                        } else {
+                            console.log(status);
+                            alert("오류입니다 관리자에게 문의하세요.")
+                        }
+                    },
+                    error: function (request, status, error) {
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    }
+                })
+            }
+            // // form - submit delay
+            // $('form').submit(function (e) {
+            //     let form = this;
+            //     // 로딩바 가져오기
+            //     $("#changeBtn").hide();
+            //     $(".loader").fadeIn();
+            //     e.preventDefault();
+            //     setTimeout(function () {
+            //         form.submit();
+            //         alert("등록이 완료됐습니다!");
+            //         location.reload();
+            //     }, 5000);
+            // });
 
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawPieChart);

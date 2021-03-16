@@ -33,7 +33,6 @@
                             <b>상세내용 :  </b>
                             <input type="text" id="description" class="form-control">
                         </p>
-                        <input type="text" id="choice" th:field="${forms.choice}" hidden="true">
                     </div>
                     <br/>
 
@@ -424,7 +423,6 @@
             function completeReserve(){
                 let date = $("#visit_date").val();
                 let description = $("#description").val();
-                let dog = $("#choice").val();
 
                 let data = {
                     address : road,
@@ -432,7 +430,6 @@
                     description : description,
                     name : hospital_name,
                     tel : tel,
-                    dog : dog
                 };
 
                 console.log(data);

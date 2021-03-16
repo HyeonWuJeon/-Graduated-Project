@@ -13,22 +13,17 @@
                         <thead class="thead-strong">
                             <tr>
                                 <th>번호</th>
-                                <th>반려견</th>
-                                <th>질병명</th>
-                                <th>마카다미아너트 중독증</th>
-                                <th>코로나 바이러스 감염증</th>
-                                <th>기관지 확장증</th>
+                                <th>반려견 이름<th>
+<!--                                <th>진단받은 질병</th>-->
                             </tr>
                         </thead>
 
                         <tbody id="tbody">
                             <tr th:each="dia : ${dias}">
                                 <td></td>
-                                <td><a th:href = "@{/member/chart/record/{id}(id = ${dia.id})}" th:text="${dia.dog}"></a></td>
-                                <td th:text="${dia.name}"></td>
-                                <td th:text="${dia.macak.getPercent()}"></td>
-                                <td th:text="${dia.corna.getPercent()}"></td>
-                                <td th:text="${dia.air.getPercent()}"></td>
+                                <td th:text="${dia.getDog().getName()}"></td>
+<!--                                <td><a th:href = "@{/member/chart/record/{id}(id = ${dia.getId()})}" th:text="${dia.getDog().getName()}"></a></td>-->
+                                <td th:text="${dia.getDog().getSymptomCause()}"></td>
                             </tr>
                         </tbody>
                     </table>

@@ -14,7 +14,6 @@
                             <tr>
                                 <th>예약 번호</th>
                                 <th>회원 이름</th>
-                                <th>반려견 이름</th>
                                 <th>방문 시간</th>
                                 <th>예약 내용</th>
                             </tr>
@@ -24,7 +23,6 @@
                             <tr th:each="reserve : ${reserves}">
                                 <td></td>
                                 <td><a th:href="@{/vet/hospital/reservation/{id}(id = ${reserve.id})}" th:text="${reserve.member.name}"></a></td>
-                                <td th:text="${reserve.dog}"></td>
                                 <td th:text="${reserve.date}"></td>
                                 <td th:text="${reserve.description}"></td>
                             </tr>

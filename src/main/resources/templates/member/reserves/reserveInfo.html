@@ -12,7 +12,6 @@
                     <table class="table table-horizontal table-striped table-hover table-bordered">
                         <thead class="thead-strong">
                             <tr>
-                                <th>반려견 이름</th>
                                 <th>병원 이름</th>
                                 <th>방문 날짜</th>
                                 <th>병원 주소</th>
@@ -24,7 +23,6 @@
 
                         <tbody id="tbody">
                             <tr th:each="reserve : ${reserves}">
-                                <td th:text="${reserve.dog}"></td>
                                 <td><a th:href="@{/reserves/settings/{id}(id = ${reserve.id})}" th:text="${reserve.name}"></a></td>
                                 <td th:text="${reserve.date}"></td>
                                 <td th:text="${reserve.address}"></td>

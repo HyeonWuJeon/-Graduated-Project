@@ -18,8 +18,8 @@
                     </div>
 
                     <div class="form-option">
-                        <select id="dogs" th:field="*{choice}">
-                            <option th:each="dog : ${dogs}" th:value="${dog.name}" th:text="${dog.name}"></option>
+                        <select id="dogs" th:field="*{id}">
+                            <option th:each="dog : ${dogs}" th:value="${dog.id}" th:text="${dog.name}"></option>
                         </select>
                     </div>
 

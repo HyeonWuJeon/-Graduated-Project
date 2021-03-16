@@ -5,6 +5,23 @@
         <header th:replace="fragments/header :: headerFragment"></header>
         <div class="col-md-12"></div>
         <div class="col-md-12"></div>
+        <div class="wrap-login100 p-l-55 p-t-50">
+        <form th:object="${MemberSearch}" class="form-inline">
+            <div class="form-group mb-5">
+                <input type="text" th:field="*{email}" class="form-control" placeholder="회원명"/>
+            </div>
+            <div class="form-group mx-sm-1 mb-5">
+                <select th:field="*{role}" class="form-control">
+                    <option value="">권한상태</option>
+                    <option th:each="role : ${T(com.example.demo.config.security.Role).values()}"
+                            th:value="${role}"
+                            th:text="${role}">option
+                    </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mb-5">검색</button>
+        </form>
+        </div>
         <div class="col-md-12">
             <div class="container">
                 <div>
