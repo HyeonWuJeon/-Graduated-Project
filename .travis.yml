@@ -16,7 +16,7 @@ cache:
     - '$HOME/.gradle'
 
 # test
-script: "./gradlew clean build"
+script: "./gradlew clean build -x test"
 #script: "mvn clean compile package" maven
 
 # codedeploy는 zip 파일을 인싟하지 못하므로 jar + 기타설정 파일들을 모아 합축한다.
