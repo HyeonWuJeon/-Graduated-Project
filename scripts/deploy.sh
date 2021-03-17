@@ -7,7 +7,7 @@ PROJECT_NAME=demo-1.0.1-SNAPSHOT
 
 echo ">Build 파일 복사"
 
-cp $REPOSITORY/zip/target/*.jar $REPOSITORY/
+cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
 echo "> 현재 구동중인 애플리케이션 pid 확인"
 
