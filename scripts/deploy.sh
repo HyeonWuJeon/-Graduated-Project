@@ -3,7 +3,7 @@
 REPOSITORY=/home/ec2-user/app/step2
 PROJECT_NAME=demo-1.0.1-SNAPSHOT
 
-#cd $REPOSITORY
+cd $REPOSITORY
 
 echo ">Build 파일 복사"
 
