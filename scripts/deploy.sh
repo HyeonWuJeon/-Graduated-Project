@@ -1,13 +1,13 @@
 #!/bin/bash
 
 REPOSITORY=/home/ec2-user/app/step2
-PROJECT_NAME=doghealthcare-webservice
+PROJECT_NAME=demo-1.0.1-SNAPSHOT
 
-cd $REPOSITORY
+#cd $REPOSITORY
 
 echo ">Build 파일 복사"
 
-cp $REPOSITORY/$PROJECT_NAME/target/*.jar $REPOSITORY/
+cp $REPOSITORY/zip/target/*.jar $REPOSITORY/
 
 echo "> 현재 구동중인 애플리케이션 pid 확인"
 
