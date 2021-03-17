@@ -36,6 +36,7 @@ before_deploy:
 #  - mv before-deploy/before-deploy.zip deploy/myblog-webservice.zip # deploy로 zip파일 이동
 #
 ## s3로 파일 업로드 혹은 codeDeply로 배포 등 외부 서비스와 연동될 행위들을 선언한다.
+
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
@@ -49,19 +50,20 @@ deploy:
     on:
       all_branches: true
 #
-#  - provider: codedeploy
-#    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
-#    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
-#    bucket: myblog-build # S3 버킷
-#    key: myblog-webservice.zip # 빌드 파일을 압축해서 전달
-#    bundle_type: zip
-#    application: myblog-webservice  #  웹 콘솔에서 등록한 CodeDeploy 어플리케이션
-#    deployment_group: myblog-webservice-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
-#    region: ap-northeast-2
-#    wait-until-deployed: true
-#    on:
-#      all_branches: true
-#
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
+    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
+    bucket: doghealthcare-build # S3 버킷
+    key: doghealthcare-webservice.zip # 빌드 파일을 압축해서 전달
+    bundle_type: zip
+    application: doghealthcare-webservice  #  웹 콘솔에서 등록한 CodeDeploy 어플리케이션
+    deployment_group: doghealthcare-webservice-group # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
+    region: ap-northeast-2
+    wait-until-deployed: true
+    on:
+      all_branches: true
+
+#Maven
 ## Permission Denied error
 #before_install:
 #  - chmod +x mvnw
