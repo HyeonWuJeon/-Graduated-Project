@@ -11,7 +11,7 @@ cp $REPOSITORY/$PROJECT_NAME/target/*.jar $REPOSITORY/
 
 echo "> 현재 구동중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -fl demo-0.0.1-SNAPSHOT | grep jar | awk '{print $1}')
+CURRENT_PID=$(pgrep -fl demo-1.0.1-SNAPSHOT | grep jar | awk '{print $1}')
 
 echo "현재 구동중인 애플리케이션 pid: $CURRENT_PID"
 
