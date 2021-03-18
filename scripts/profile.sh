@@ -31,7 +31,7 @@ function find_idle_port()
 
     if [ "${IDLE_PROFILE}" == real1 ]
     then
-      echo "8081"
+      echo "80"
     else
       echo "8082"
     fi
