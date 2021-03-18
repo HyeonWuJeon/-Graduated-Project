@@ -27,11 +27,12 @@ $ python app.py
 ![guhaedog_architecture](img/guhaedog_architecture.png)
 
 ### Tech Stack
-|Frontend   |Backend          |Database|AI            |Cloud       |
-|-----------|-----------------|--------|--------------|------------|
-|`Thymeleaf`|`Spring Boot`    |`MySQL` |`Flask`       |`Amazon EC2`|
-|`Bootstrap`|`Spring Security`|        |`pandas`      |`Amazon RDS`|
-|           |                 |        |`scikit-learn`|            |
+|Frontend   |Backend          |Database|AI            |CI/CD       |Cloud       |
+|-----------|-----------------|--------|--------------|------------|------------|
+|`Thymeleaf`|`Spring Boot`    |`MySQL` |`Flask`       |`Travis CI` |`Amazon EC2`|
+|`Bootstrap`|`Spring Security`|        |`pandas`      |`Nginx`     |`Amazon RDS`|
+|           |                 |        |`scikit-learn`|            |`Amazon S3` |
+|           |                 |        |              |            |`Amazon Codedeploy`|
 
 |API                         |ETC          |
 |----------------------------|-------------|
