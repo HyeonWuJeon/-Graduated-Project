@@ -26,12 +26,16 @@ $ python app.py
 ### Architecture
 ![guhaedog_architecture](img/guhaedog_architecture.png)
 
+### CI/CD
+![image](https://user-images.githubusercontent.com/45196240/106359171-3145e900-6354-11eb-9b77-1906f55f35e7.png)
+
 ### Tech Stack
-|Frontend   |Backend          |Database|AI            |Cloud       |
-|-----------|-----------------|--------|--------------|------------|
-|`Thymeleaf`|`Spring Boot`    |`MySQL` |`Flask`       |`Amazon EC2`|
-|`Bootstrap`|`Spring Security`|        |`pandas`      |`Amazon RDS`|
-|           |                 |        |`scikit-learn`|            |
+|Frontend   |Backend          |Database|AI            |CI/CD       |Cloud       |
+|-----------|-----------------|--------|--------------|------------|------------|
+|`Thymeleaf`|`Spring Boot`    |`MySQL` |`Flask`       |`Travis CI` |`Amazon EC2`|
+|`Bootstrap`|`Spring Security`|        |`pandas`      |`Nginx`     |`Amazon RDS`|
+|           |                 |        |`scikit-learn`|            |`Amazon S3` |
+|           |                 |        |              |            |`Amazon Codedeploy`|
 
 |API                         |ETC          |
 |----------------------------|-------------|
