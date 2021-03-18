@@ -26,6 +26,9 @@ $ python app.py
 ### Architecture
 ![guhaedog_architecture](img/guhaedog_architecture.png)
 
+### CI/CD
+![image](https://user-images.githubusercontent.com/45196240/106359171-3145e900-6354-11eb-9b77-1906f55f35e7.png)
+
 ### Tech Stack
 |Frontend   |Backend          |Database|AI            |CI/CD       |Cloud       |
 |-----------|-----------------|--------|--------------|------------|------------|
